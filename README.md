@@ -792,4 +792,3 @@ Cảm ơn cộng đồng open source đã đóng góp! ❤️
     <img src="https://img.shields.io/github/issues-pr/ToanTranDuc/TTTD_KTPM" alt="Pull Requests">
     <img src="https://img.shields.io/github/last-commit/ToanTranDuc/TTTD_KTPM" alt="Last Commit">
 </p>
-
