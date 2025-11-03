@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+>
+    <testsuites>
+        <!-- ========================================== -->
+        <!--   CHỈ CHẠY TEST CASES LIÊN QUAN ĐÊN ORDER  -->
+        <!-- ========================================== -->
+        
+        <!-- Admin Order Tests -->
+        <testsuite name="Admin Order Tests">
+            <file>packages/Webkul/Admin/tests/Feature/Sales/OrdersTest.php</file>
+            <directory>packages/Webkul/Admin/tests/Feature/Sales/Orders</directory>
+        </testsuite>
+
+        <!-- Shop Order Tests -->
+        <testsuite name="Shop Order Tests">
+            <file>packages/Webkul/Shop/tests/Feature/Customers/OrdersTest.php</file>
+        </testsuite>
+
+        <!-- Invoice Tests (liên quan Order) -->
+        <testsuite name="Invoice Tests">
+            <file>packages/Webkul/Admin/tests/Feature/Sales/InvoiceTest.php</file>
+        </testsuite>
+
+        <!-- Shipment Tests (liên quan Order) -->
+        <testsuite name="Shipment Tests">
+            <file>packages/Webkul/Admin/tests/Feature/Sales/ShipmentTest.php</file>
+        </testsuite>
+
+        <!-- Refund Tests (liên quan Order) -->
+        <testsuite name="Refund Tests">
+            <file>packages/Webkul/Admin/tests/Feature/Sales/RefundTest.php</file>
+        </testsuite>
+
+        <!-- Transaction Tests (liên quan Order) -->
+        <testsuite name="Transaction Tests">
+            <file>packages/Webkul/Admin/tests/Feature/Sales/TransactionTest.php</file>
+        </testsuite>
+
+        <!-- Checkout Tests (tạo Order mới) -->
+        <testsuite name="Checkout Tests">
+            <file>packages/Webkul/Shop/tests/Feature/Checkout/CheckoutTest.php</file>
+        </testsuite>
+
+        <!-- Cart Tests (cần thiết cho Order) -->
+        <testsuite name="Cart Tests">
+            <file>packages/Webkul/Shop/tests/Feature/Checkout/CartTest.php</file>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory>packages/Webkul/Sales/src</directory>
+            <directory>packages/Webkul/Admin/src/Http/Controllers/Sales</directory>
+            <directory>packages/Webkul/Shop/src/Http/Controllers/Checkout</directory>
+        </include>
+    </source>
+
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_STORE" value="array"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+    </php>
+</phpunit>
