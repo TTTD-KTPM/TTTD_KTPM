@@ -49,6 +49,7 @@
     "require-dev": {
         "bagisto/laravel-datafaker": "2.3.*",
         "barryvdh/laravel-debugbar": "^3.8",
+        "barryvdh/laravel-ide-helper": "^3.6",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.19",
         "mockery/mockery": "^1.6",
