@@ -70,26 +70,14 @@ jobs:
         mkdir -p storage/framework/sessions  
         mkdir -p storage/framework/views
         chmod -R 775 storage
-        
-
-        
-    - name: ⚙️ Configure Environment (Minimal Setup)
+               
+    # TODO: Enable when Webkul packages are added to repository
+    - name: 🗄️ Install Bagisto (Full Setup)
       run: |
-        cp .env.example .env || echo ".env.example not found, creating minimal .env"
-        php artisan key:generate
-        
-    - name: 📦 Discover Packages (Available Only)
-      run: php artisan package:discover --ansi
-        
-    - name: 🗄️ Setup Database (Basic Laravel)
-      run: |
-        php artisan migrate --force || echo "No migrations to run yet"
+        php artisan package:discover --ansi
+        php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation
       env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        
-    # TODO: Enable when Webkul Installer package is added to repository
-    # - name: 🗄️ Install Bagisto (Full Setup)
-    #   run: php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation
         
     - name: 🧪 Run Tests (Basic Laravel)
       run: php artisan test || echo "No tests available yet"
