@@ -28,13 +28,14 @@ return [
         // \Webkul\Shop\Providers\ModuleServiceProvider::class,
         \Webkul\Checkout\Providers\ModuleServiceProvider::class,  // Required by Customer (cart references)
         // \Webkul\Payment\Providers\ModuleServiceProvider::class,
-        // \Webkul\Sales\Providers\ModuleServiceProvider::class,
+        \Webkul\Sales\Providers\ModuleServiceProvider::class,    // Required by Customer (order references)
         \Webkul\Inventory\Providers\ModuleServiceProvider::class,  // Required by Product
         
         // 🔧 UTILITY MODULES:
         // \Webkul\DataGrid\Providers\ModuleServiceProvider::class,
-        // \Webkul\Theme\Providers\ModuleServiceProvider::class,
-        // \Webkul\CMS\Providers\ModuleServiceProvider::class,
+        \Webkul\Theme\Providers\ModuleServiceProvider::class,     // Required by Installer (theme seeding)
+        \Webkul\CMS\Providers\ModuleServiceProvider::class,       // Required by Installer
+        \Webkul\User\Providers\ModuleServiceProvider::class,      // Required by Installer (admin users)
         
         // 🎯 ADVANCED FEATURES:
         // \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,

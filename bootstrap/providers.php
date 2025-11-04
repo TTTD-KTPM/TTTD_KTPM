@@ -28,13 +28,14 @@ return [
     // Webkul\Shop\Providers\ShopServiceProvider::class,
     Webkul\Checkout\Providers\CheckoutServiceProvider::class,   // Required by Customer (cart references)
     // Webkul\Payment\Providers\PaymentServiceProvider::class,
-    // Webkul\Sales\Providers\SalesServiceProvider::class,
+    Webkul\Sales\Providers\SalesServiceProvider::class,        // Required by Customer (order references)
     Webkul\Inventory\Providers\InventoryServiceProvider::class,  // Required by Product (inventory sources)
     
     // 🔧 UTILITY PACKAGES:
     // Webkul\DataGrid\Providers\DataGridServiceProvider::class,
-    // Webkul\Theme\Providers\ThemeServiceProvider::class,
-    // Webkul\CMS\Providers\CMSServiceProvider::class,
+    Webkul\Theme\Providers\ThemeServiceProvider::class,        // Required by Installer (theme seeding)
+    Webkul\CMS\Providers\CMSServiceProvider::class,            // Required by Installer (seeding CMS pages)
+    Webkul\User\Providers\UserServiceProvider::class,          // Required by Installer (admin users)
     
     // 🎯 ADVANCED FEATURES:
     // Webkul\CartRule\Providers\CartRuleServiceProvider::class,
