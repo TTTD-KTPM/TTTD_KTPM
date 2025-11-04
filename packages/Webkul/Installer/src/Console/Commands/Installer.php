@@ -190,8 +190,9 @@ class Installer extends Command
 
         $this->loadEnvConfigs();
 
-        $this->warn('Step: Generating key...');
-        $this->call('key:generate');
+        // Skip key generation - APP_KEY is set via environment variables (GitHub Secrets)
+        // $this->warn('Step: Generating key...');
+        // $this->call('key:generate');
 
         $this->warn('Step: Migrating all tables...');
 
