@@ -1,2 +1,0 @@
-<?php echo $__env->make('shop::products.view.customizable-options', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-<?php /**PATH D:\xampp\htdocs\TTTD_KTPM_Clone\packages\Webkul\Shop\src\Resources\views\products\view\types\simple.blade.php ENDPATH**/ ?>

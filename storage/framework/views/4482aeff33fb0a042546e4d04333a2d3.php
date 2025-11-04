@@ -1,2 +1,0 @@
-<?php echo $__env->make('admin::catalog.products.edit.customizable-options', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-<?php /**PATH D:\xampp\htdocs\TTTD_KTPM_Clone\packages\Webkul\Admin\src\Resources\views\catalog\products\edit\types\simple.blade.php ENDPATH**/ ?>
