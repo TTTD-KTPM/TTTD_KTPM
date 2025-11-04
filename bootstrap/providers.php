@@ -29,7 +29,7 @@ return [
     // Webkul\Checkout\Providers\CheckoutServiceProvider::class,
     // Webkul\Payment\Providers\PaymentServiceProvider::class,
     // Webkul\Sales\Providers\SalesServiceProvider::class,
-    // Webkul\Inventory\Providers\InventoryServiceProvider::class,
+    Webkul\Inventory\Providers\InventoryServiceProvider::class,  // Required by Product (inventory sources)
     
     // 🔧 UTILITY PACKAGES:
     // Webkul\DataGrid\Providers\DataGridServiceProvider::class,
