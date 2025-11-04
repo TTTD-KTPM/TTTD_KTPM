@@ -71,9 +71,8 @@ jobs:
         mkdir -p storage/framework/views
         chmod -R 775 storage
         
-    - name: ⚙️ Configure Environment
+    - name: ⚙️ Clear Application Cache
       run: |
-        cp .env.example .env
         php artisan config:clear
         php artisan cache:clear
         
