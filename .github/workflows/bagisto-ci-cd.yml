@@ -75,7 +75,7 @@ jobs:
     - name: 🗄️ Install Bagisto (Full Setup)
       run: |
         php artisan package:discover --ansi
-        php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation
+        php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation --skip-env-check
       env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         
