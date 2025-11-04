@@ -26,7 +26,7 @@ return [
     // Webkul\Category\Providers\CategoryServiceProvider::class,  // Already added above
     Webkul\Product\Providers\ProductServiceProvider::class,      // Required by Customer (wishlist)
     // Webkul\Shop\Providers\ShopServiceProvider::class,
-    // Webkul\Checkout\Providers\CheckoutServiceProvider::class,
+    Webkul\Checkout\Providers\CheckoutServiceProvider::class,   // Required by Customer (cart references)
     // Webkul\Payment\Providers\PaymentServiceProvider::class,
     // Webkul\Sales\Providers\SalesServiceProvider::class,
     Webkul\Inventory\Providers\InventoryServiceProvider::class,  // Required by Product (inventory sources)

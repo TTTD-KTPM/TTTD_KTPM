@@ -26,7 +26,7 @@ return [
         \Webkul\Category\Providers\ModuleServiceProvider::class,
         \Webkul\Product\Providers\ModuleServiceProvider::class,    // Required by Customer (wishlist)
         // \Webkul\Shop\Providers\ModuleServiceProvider::class,
-        // \Webkul\Checkout\Providers\ModuleServiceProvider::class,
+        \Webkul\Checkout\Providers\ModuleServiceProvider::class,  // Required by Customer (cart references)
         // \Webkul\Payment\Providers\ModuleServiceProvider::class,
         // \Webkul\Sales\Providers\ModuleServiceProvider::class,
         \Webkul\Inventory\Providers\ModuleServiceProvider::class,  // Required by Product
