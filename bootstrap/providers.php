@@ -8,39 +8,51 @@ return [
 
     /**
      * Webkul's service providers.
+     * 
+     * TODO: Uncomment packages as they are added to the repository incrementally:
      */
-    Webkul\Admin\Providers\AdminServiceProvider::class,
-    Webkul\Attribute\Providers\AttributeServiceProvider::class,
-    Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
-    Webkul\CMS\Providers\CMSServiceProvider::class,
-    Webkul\CartRule\Providers\CartRuleServiceProvider::class,
-    Webkul\CatalogRule\Providers\CatalogRuleServiceProvider::class,
-    Webkul\Category\Providers\CategoryServiceProvider::class,
-    Webkul\Checkout\Providers\CheckoutServiceProvider::class,
+    
+    // 🏗️ FOUNDATION PACKAGES (Add these first):
     Webkul\Core\Providers\CoreServiceProvider::class,
     Webkul\Core\Providers\EnvValidatorServiceProvider::class,
     Webkul\Customer\Providers\CustomerServiceProvider::class,
-    Webkul\DataGrid\Providers\DataGridServiceProvider::class,
-    Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
-    Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
-    Webkul\FPC\Providers\FPCServiceProvider::class,
-    Webkul\GDPR\Providers\GDPRServiceProvider::class,
-    Webkul\Installer\Providers\InstallerServiceProvider::class,
-    Webkul\Inventory\Providers\InventoryServiceProvider::class,
-    Webkul\MagicAI\Providers\MagicAIServiceProvider::class,
-    Webkul\Marketing\Providers\MarketingServiceProvider::class,
-    Webkul\Notification\Providers\NotificationServiceProvider::class,
-    Webkul\Payment\Providers\PaymentServiceProvider::class,
-    Webkul\Paypal\Providers\PaypalServiceProvider::class,
-    Webkul\Product\Providers\ProductServiceProvider::class,
-    Webkul\Rule\Providers\RuleServiceProvider::class,
-    Webkul\Sales\Providers\SalesServiceProvider::class,
-    Webkul\Shipping\Providers\ShippingServiceProvider::class,
-    Webkul\Shop\Providers\ShopServiceProvider::class,
-    Webkul\Sitemap\Providers\SitemapServiceProvider::class,
-    Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
-    Webkul\SocialShare\Providers\SocialShareServiceProvider::class,
     Webkul\Tax\Providers\TaxServiceProvider::class,
-    Webkul\Theme\Providers\ThemeServiceProvider::class,
-    Webkul\User\Providers\UserServiceProvider::class,
+    
+    // 📦 FEATURE PACKAGES (Add incrementally):
+    // Webkul\Admin\Providers\AdminServiceProvider::class,
+    // Webkul\User\Providers\UserServiceProvider::class,
+    // Webkul\Attribute\Providers\AttributeServiceProvider::class,
+    // Webkul\Category\Providers\CategoryServiceProvider::class,
+    // Webkul\Product\Providers\ProductServiceProvider::class,
+    // Webkul\Shop\Providers\ShopServiceProvider::class,
+    // Webkul\Checkout\Providers\CheckoutServiceProvider::class,
+    // Webkul\Payment\Providers\PaymentServiceProvider::class,
+    // Webkul\Sales\Providers\SalesServiceProvider::class,
+    // Webkul\Inventory\Providers\InventoryServiceProvider::class,
+    
+    // 🔧 UTILITY PACKAGES:
+    // Webkul\DataGrid\Providers\DataGridServiceProvider::class,
+    // Webkul\Theme\Providers\ThemeServiceProvider::class,
+    // Webkul\CMS\Providers\CMSServiceProvider::class,
+    
+    // 🎯 ADVANCED FEATURES:
+    // Webkul\CartRule\Providers\CartRuleServiceProvider::class,
+    // Webkul\CatalogRule\Providers\CatalogRuleServiceProvider::class,
+    // Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
+    // Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
+    // Webkul\Marketing\Providers\MarketingServiceProvider::class,
+    // Webkul\Notification\Providers\NotificationServiceProvider::class,
+    // Webkul\Paypal\Providers\PaypalServiceProvider::class,
+    // Webkul\Shipping\Providers\ShippingServiceProvider::class,
+    // Webkul\Sitemap\Providers\SitemapServiceProvider::class,
+    // Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
+    // Webkul\SocialShare\Providers\SocialShareServiceProvider::class,
+    
+    // 🔍 DEVELOPMENT TOOLS:
+    // Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
+    // Webkul\FPC\Providers\FPCServiceProvider::class,
+    // Webkul\GDPR\Providers\GDPRServiceProvider::class,
+    // Webkul\Installer\Providers\InstallerServiceProvider::class,
+    // Webkul\MagicAI\Providers\MagicAIServiceProvider::class,
+    // Webkul\Rule\Providers\RuleServiceProvider::class,
 ];
