@@ -69,6 +69,8 @@ jobs:
         mkdir -p storage/framework/cache
         mkdir -p storage/framework/sessions  
         mkdir -p storage/framework/views
+        mkdir -p storage/app/public
+        mkdir -p storage/logs
         chmod -R 775 storage
                
     # TODO: Enable when Webkul packages are added to repository
