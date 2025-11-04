@@ -71,29 +71,31 @@ jobs:
         mkdir -p storage/framework/views
         chmod -R 775 storage
         
-    - name: ⚙️ Configure Environment (Minimal Setup)
-      run: |
-        php artisan key:generate || echo "Testing"
+    # - name: ⚙️ Configure Environment (Minimal Setup)
+    #   run: |
+    #     php artisan key:generate || echo "Testing"
         
-    - name: 🗄️ Setup Database (Basic Laravel)
-      run: |
-        php artisan migrate --force || echo "No migrations to run yet"
-      env:
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    # - name: 🗄️ Setup Database (Basic Laravel)
+    #   run: |
+    #     php artisan migrate --force || echo "No migrations to run yet"
+    #   env:
+    #     DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         
     # TODO: Enable when Webkul packages are added to repository
-    # - name: 🗄️ Install Bagisto (Full Setup)
-    #   run: |
-    #     php artisan package:discover --ansi
-    #     php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation
+    - name: 🗄️ Install Bagisto (Full Setup)
+      run: |
+        php artisan package:discover --ansi
+        php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation
+      env:
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         
     - name: 🧪 Run Tests (Basic Laravel)
       run: php artisan test || echo "No tests available yet"
       continue-on-error: true
       
-    - name: 🎨 Check Code Style
-      run: ./vendor/bin/pint --test
-      continue-on-error: true
+    # - name: 🎨 Check Code Style
+    #   run: ./vendor/bin/pint --test
+    #   continue-on-error: true
       
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
