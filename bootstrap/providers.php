@@ -17,6 +17,7 @@ return [
     Webkul\Core\Providers\EnvValidatorServiceProvider::class,
     Webkul\Customer\Providers\CustomerServiceProvider::class,
     Webkul\Tax\Providers\TaxServiceProvider::class,
+    Webkul\Category\Providers\CategoryServiceProvider::class,  // Required by Core (foreign key)
     
     // 📦 FEATURE PACKAGES (Add incrementally):
     // Webkul\Admin\Providers\AdminServiceProvider::class,

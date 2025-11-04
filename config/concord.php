@@ -23,7 +23,7 @@ return [
         // \Webkul\Admin\Providers\ModuleServiceProvider::class,
         // \Webkul\User\Providers\ModuleServiceProvider::class,
         // \Webkul\Attribute\Providers\ModuleServiceProvider::class,
-        // \Webkul\Category\Providers\ModuleServiceProvider::class,
+        \Webkul\Category\Providers\ModuleServiceProvider::class,
         // \Webkul\Product\Providers\ModuleServiceProvider::class,
         // \Webkul\Shop\Providers\ModuleServiceProvider::class,
         // \Webkul\Checkout\Providers\ModuleServiceProvider::class,
