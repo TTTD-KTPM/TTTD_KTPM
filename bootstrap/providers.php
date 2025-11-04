@@ -22,9 +22,9 @@ return [
     // 📦 FEATURE PACKAGES (Add incrementally):
     // Webkul\Admin\Providers\AdminServiceProvider::class,
     // Webkul\User\Providers\UserServiceProvider::class,
-    // Webkul\Attribute\Providers\AttributeServiceProvider::class,
-    // Webkul\Category\Providers\CategoryServiceProvider::class,
-    // Webkul\Product\Providers\ProductServiceProvider::class,
+    Webkul\Attribute\Providers\AttributeServiceProvider::class,  // Required by Product
+    // Webkul\Category\Providers\CategoryServiceProvider::class,  // Already added above
+    Webkul\Product\Providers\ProductServiceProvider::class,      // Required by Customer (wishlist)
     // Webkul\Shop\Providers\ShopServiceProvider::class,
     // Webkul\Checkout\Providers\CheckoutServiceProvider::class,
     // Webkul\Payment\Providers\PaymentServiceProvider::class,

@@ -22,9 +22,9 @@ return [
         // 📦 FEATURE MODULES (Add incrementally):
         // \Webkul\Admin\Providers\ModuleServiceProvider::class,
         // \Webkul\User\Providers\ModuleServiceProvider::class,
-        // \Webkul\Attribute\Providers\ModuleServiceProvider::class,
+        \Webkul\Attribute\Providers\ModuleServiceProvider::class,  // Required by Product
         \Webkul\Category\Providers\ModuleServiceProvider::class,
-        // \Webkul\Product\Providers\ModuleServiceProvider::class,
+        \Webkul\Product\Providers\ModuleServiceProvider::class,    // Required by Customer (wishlist)
         // \Webkul\Shop\Providers\ModuleServiceProvider::class,
         // \Webkul\Checkout\Providers\ModuleServiceProvider::class,
         // \Webkul\Payment\Providers\ModuleServiceProvider::class,
