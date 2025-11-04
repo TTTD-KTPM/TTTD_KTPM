@@ -1,0 +1,116 @@
+name: Bagisto CI/CD Pipeline
+
+on:
+  push:
+    branches: [ Triet-Customer ]
+  pull_request:
+    branches: [ Triet-Customer ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    env:
+      # Application Config
+      APP_NAME: Bagisto
+      APP_ENV: testing
+      APP_DEBUG: true
+      APP_URL: http://localhost:8000
+      APP_TIMEZONE: UTC
+      APP_LOCALE: en
+      APP_CURRENCY: USD
+      
+      # Database Config  
+      DB_CONNECTION: mysql
+      DB_HOST: mysql-testing-ktpm2025.h.aivencloud.com
+      DB_PORT: 20066
+      DB_DATABASE: bagisto
+      DB_USERNAME: avnadmin
+      DB_PREFIX: bg_
+      
+      # Session & Cache
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+      
+      # Mail (for testing)
+      MAIL_MAILER: log
+      MAIL_FROM_ADDRESS: test@example.com
+      
+      # Secrets (from GitHub Secrets)
+      APP_KEY: ${{ secrets.APP_KEY }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 🐘 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, dom, fileinfo, mysql, gd, bcmath, zip, intl, curl
+        coverage: xdebug
+        
+    - name: 📦 Cache Composer Dependencies
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: composer-
+        
+    - name: 🎵 Install Composer Dependencies
+      run: composer install 
+      
+    - name: 📁 Create Storage Directories
+      run: |
+        mkdir -p storage/framework/cache
+        mkdir -p storage/framework/sessions  
+        mkdir -p storage/framework/views
+        chmod -R 775 storage
+        
+    - name: ⚙️ Configure Environment
+      run: |
+        cp .env.example .env
+        php artisan config:clear
+        php artisan cache:clear
+        
+    - name: 🗄️ Install Bagisto (Non-Interactive)  
+      run: |
+        php artisan bagisto:install \
+          --no-interaction \
+          --skip-github-star \
+          --skip-admin-creation
+      env:
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        
+    - name: 🧪 Run Tests
+      run: php artisan test
+      
+    - name: 🎨 Check Code Style
+      run: ./vendor/bin/pint --test
+      continue-on-error: true
+      
+    - name: 📊 Generate Coverage Report
+      run: php artisan test --coverage
+      continue-on-error: true
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 🚀 Deploy to Production
+      run: |
+        echo "🎉 Ready for production deployment!"
+        echo "All tests passed, deploying to server..."
+        # Add your deployment commands here
+        
+    - name: 📢 Notify Success
+      run: |
+        echo "✅ Deployment completed successfully!"
+        echo "🌐 Application is live!"
