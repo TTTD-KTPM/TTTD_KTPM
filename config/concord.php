@@ -39,12 +39,15 @@ return [
         
         // 🎯 ADVANCED FEATURES:
         \Webkul\GDPR\Providers\ModuleServiceProvider::class,     // Required by Shop (customer data management)
+        
+        // 🎪 MARKETING ECOSYSTEM:
+        \Webkul\Rule\Providers\ModuleServiceProvider::class,     // Base rule functionality for promotions
+        \Webkul\Marketing\Providers\ModuleServiceProvider::class, // Marketing campaigns, events, search terms, URL rewrites
+        \Webkul\CartRule\Providers\ModuleServiceProvider::class,  // Shopping cart promotions (depends on Rule, Customer)
+        \Webkul\CatalogRule\Providers\ModuleServiceProvider::class, // Product catalog promotions (depends on Rule, Product)
+        
         // \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,
-        // \Webkul\CartRule\Providers\ModuleServiceProvider::class,
-        // \Webkul\CatalogRule\Providers\ModuleServiceProvider::class,
         // \Webkul\DataTransfer\Providers\ModuleServiceProvider::class,
-        // \Webkul\GDPR\Providers\ModuleServiceProvider::class,
-        // \Webkul\Marketing\Providers\ModuleServiceProvider::class,
         // \Webkul\Notification\Providers\ModuleServiceProvider::class,
         // \Webkul\Paypal\Providers\ModuleServiceProvider::class,
         // \Webkul\Rule\Providers\ModuleServiceProvider::class,
