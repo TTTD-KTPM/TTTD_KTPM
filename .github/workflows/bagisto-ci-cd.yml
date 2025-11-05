@@ -98,7 +98,7 @@ jobs:
       env:
         LC_ALL: en_US.UTF-8
         LANG: en_US.UTF-8
-      
+       
     # - name: 🎨 Check Code Style
     #   run: ./vendor/bin/pint --test
     #   continue-on-error: true
