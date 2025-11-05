@@ -20,7 +20,7 @@ return [
         \Webkul\Tax\Providers\ModuleServiceProvider::class,
         
         // 📦 FEATURE MODULES (Add incrementally):
-        // \Webkul\Admin\Providers\ModuleServiceProvider::class,
+        \Webkul\Admin\Providers\ModuleServiceProvider::class,
         // \Webkul\User\Providers\ModuleServiceProvider::class,
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,  // Required by Product
         \Webkul\Category\Providers\ModuleServiceProvider::class,

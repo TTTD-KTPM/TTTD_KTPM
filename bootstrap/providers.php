@@ -20,7 +20,7 @@ return [
     Webkul\Category\Providers\CategoryServiceProvider::class,  // Required by Core (foreign key)
     
     // 📦 FEATURE PACKAGES (Add incrementally):
-    // Webkul\Admin\Providers\AdminServiceProvider::class,
+    Webkul\Admin\Providers\AdminServiceProvider::class,
     // Webkul\User\Providers\UserServiceProvider::class,
     Webkul\Attribute\Providers\AttributeServiceProvider::class,  // Required by Product
     // Webkul\Category\Providers\CategoryServiceProvider::class,  // Already added above
