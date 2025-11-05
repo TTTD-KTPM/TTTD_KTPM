@@ -25,19 +25,20 @@ return [
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,  // Required by Product
         \Webkul\Category\Providers\ModuleServiceProvider::class,
         \Webkul\Product\Providers\ModuleServiceProvider::class,    // Required by Customer (wishlist)
-        // \Webkul\Shop\Providers\ModuleServiceProvider::class,
+        \Webkul\Shop\Providers\ModuleServiceProvider::class,      // Frontend shop interface
         \Webkul\Checkout\Providers\ModuleServiceProvider::class,  // Required by Customer (cart references)
         // \Webkul\Payment\Providers\ModuleServiceProvider::class,
         \Webkul\Sales\Providers\ModuleServiceProvider::class,    // Required by Customer (order references)
         \Webkul\Inventory\Providers\ModuleServiceProvider::class,  // Required by Product
         
         // 🔧 UTILITY MODULES:
-        // \Webkul\DataGrid\Providers\ModuleServiceProvider::class,
+        \Webkul\DataGrid\Providers\ModuleServiceProvider::class,  // Required by Shop (customer tables)
         \Webkul\Theme\Providers\ModuleServiceProvider::class,     // Required by Installer (theme seeding)
         \Webkul\CMS\Providers\ModuleServiceProvider::class,       // Required by Installer
         \Webkul\User\Providers\ModuleServiceProvider::class,      // Required by Installer (admin users)
         
         // 🎯 ADVANCED FEATURES:
+        \Webkul\GDPR\Providers\ModuleServiceProvider::class,     // Required by Shop (customer data management)
         // \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,
         // \Webkul\CartRule\Providers\ModuleServiceProvider::class,
         // \Webkul\CatalogRule\Providers\ModuleServiceProvider::class,
