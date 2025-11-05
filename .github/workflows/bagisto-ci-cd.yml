@@ -10,36 +10,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     
-    env:
-      # Application Config
-      APP_NAME: Bagisto
-      APP_ENV: testing
-      APP_DEBUG: true
-      APP_URL: http://localhost:8000
-      APP_TIMEZONE: UTC
-      APP_LOCALE: en
-      APP_CURRENCY: USD
-      
-      # Database Config  
-      DB_CONNECTION: mysql
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_DATABASE: bagisto
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PREFIX: bg_
-      
-      # Session & Cache
-      SESSION_DRIVER: file
-      CACHE_STORE: file
-      QUEUE_CONNECTION: sync
-      
-      # Mail (for testing)
-      MAIL_MAILER: log
-      MAIL_FROM_ADDRESS: test@example.com
-      
-      # Secrets (from GitHub Secrets)
-      APP_KEY: ${{ secrets.APP_KEY }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bagisto
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
       
     steps:
     - name: 📥 Checkout Code
@@ -48,21 +27,11 @@ jobs:
     - name: 🐘 Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
-        extensions: mbstring, dom, fileinfo, mysql, gd, bcmath, zip, intl, curl
-        coverage: xdebug
-        
-    - name: 🌍 Configure Locale for Currency Formatting
-      run: |
-        # Install locale packages to ensure consistent currency formatting
-        sudo apt-get update
-        sudo apt-get install -y locales locales-all
-        sudo locale-gen en_US.UTF-8
-        sudo update-locale LANG=en_US.UTF-8
-        export LC_ALL=en_US.UTF-8
-        export LANG=en_US.UTF-8
-        locale -a | head -10
-        
+        php-version: '8.3'
+        extensions: curl, fileinfo, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
+        ini-values: error_reporting=E_ALL
+        tools: composer:v2
+                
     - name: 📦 Cache Composer Dependencies
       uses: actions/cache@v3
       with:
@@ -73,7 +42,6 @@ jobs:
     - name: 🎵 Install Composer Dependencies
       run: |
         composer install --no-scripts --no-interaction
-        php artisan package:discover --ansi || echo "Package discovery failed, continuing..." 
       
     - name: 📁 Create Storage Directories
       run: |
@@ -84,39 +52,23 @@ jobs:
         mkdir -p storage/logs
         chmod -R 775 storage
                
-    - name: 🗄️ Install Bagisto
+    - name: � Setting Environment
       run: |
-        php artisan package:discover --ansi
-        php artisan bagisto:install --no-interaction --skip-github-star --skip-admin-creation --skip-env-check
-      env:
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        cp .env.example .env
+        sed -i "s|^\(APP_ENV=\s*\).*$|\1testing|" .env
+        sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env
+        sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.mysql.ports['3306'] }}|" .env
+        sed -i "s|^\(DB_DATABASE=\s*\).*$|\1bagisto|" .env
+        sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
+        sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
+        echo "=== .env configuration ==="
+        cat .env
         
-    - name: 🔧 Fix Missing Files for Tests
-      run: |
-        # Create missing storage directories
-        mkdir -p storage/framework/cache/data
-        mkdir -p storage/framework/testing
-        mkdir -p public/themes
-        mkdir -p resources/themes/default
-        
-        # Create basic theme files if missing
-        touch public/themes/.gitkeep
-        
-        # Ensure proper permissions
-        chmod -R 775 storage public/themes
-        
-    - name: 🧪 Run Tests (Basic Laravel)
-      run: |
-        echo "Running tests with error output..."
-        vendor/bin/pest --colors=always --filter="should format the price based on the mentioned currency and place the symbol on the left side with space" 2>&1 || {
-          echo "=== Test completed with warnings. Checking logs ==="
-          cat storage/logs/laravel.log 2>/dev/null || echo "No Laravel logs"
-          echo "=== End logs ==="
-        }
-      continue-on-error: true
-      env:
-        LC_ALL: en_US.UTF-8
-        LANG: en_US.UTF-8
+    - name: 🗄️ Running Bagisto Installer
+      run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
+            
+    - name: 🧪 Running Pest Test
+      run: vendor/bin/pest --colors=always
        
     # - name: 🎨 Check Code Style
     #   run: ./vendor/bin/pint --test
