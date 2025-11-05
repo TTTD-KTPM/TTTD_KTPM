@@ -619,8 +619,6 @@ class Installer extends Command
      */
     protected function getEnvVariable(string $key, $default = null): string|bool
     {
-        // Original .env file reading method (commented out for GitHub Actions compatibility)
-        /*
         if ($data = file(base_path('.env'))) {
             foreach ($data as $line) {
                 $line = preg_replace('/\s+/', '', $line);
@@ -634,11 +632,8 @@ class Installer extends Command
                 }
             }
         }
-        */
 
-        // Use Laravel's env() helper which reads from environment variables
-        // This works with GitHub Actions environment variables
-        return env($key, $default);
+        return $default;
     }
 
     /**

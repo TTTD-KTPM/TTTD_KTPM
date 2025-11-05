@@ -52,7 +52,7 @@ jobs:
         mkdir -p storage/logs
         chmod -R 775 storage
                
-    - name: � Setting Environment
+    - name: 📝 Setting Environment
       run: |
         cp .env.example .env
         sed -i "s|^\(APP_ENV=\s*\).*$|\1testing|" .env
@@ -64,16 +64,15 @@ jobs:
         echo "=== .env configuration ==="
         cat .env
         
+    # - name: 🔑 Generate Application Key
+    #   run: php artisan key:generate --ansi
+        
     - name: 🗄️ Running Bagisto Installer
       run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
             
     - name: 🧪 Running Pest Test
       run: vendor/bin/pest --colors=always
        
-    # - name: 🎨 Check Code Style
-    #   run: ./vendor/bin/pint --test
-    #   continue-on-error: true
-      
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
 
