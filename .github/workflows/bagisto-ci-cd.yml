@@ -52,6 +52,17 @@ jobs:
         extensions: mbstring, dom, fileinfo, mysql, gd, bcmath, zip, intl, curl
         coverage: xdebug
         
+    - name: 🌍 Configure Locale for Currency Formatting
+      run: |
+        # Install locale packages to ensure consistent currency formatting
+        sudo apt-get update
+        sudo apt-get install -y locales locales-all
+        sudo locale-gen en_US.UTF-8
+        sudo update-locale LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
+        export LANG=en_US.UTF-8
+        locale -a | head -10
+        
     - name: 📦 Cache Composer Dependencies
       uses: actions/cache@v3
       with:
@@ -84,6 +95,9 @@ jobs:
     - name: 🧪 Run Tests (Basic Laravel)
       run: php artisan test || echo "No tests available yet"
       continue-on-error: true
+      env:
+        LC_ALL: en_US.UTF-8
+        LANG: en_US.UTF-8
       
     # - name: 🎨 Check Code Style
     #   run: ./vendor/bin/pint --test
