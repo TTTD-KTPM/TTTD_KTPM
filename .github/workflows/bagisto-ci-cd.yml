@@ -91,9 +91,24 @@ jobs:
       env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         
+    - name: 🔧 Fix Missing Files for Tests
+      run: |
+        # Create missing storage directories
+        mkdir -p storage/framework/cache/data
+        mkdir -p storage/framework/testing
+        mkdir -p public/themes
+        mkdir -p resources/themes/default
+        
+        # Create basic theme files if missing
+        touch public/themes/.gitkeep
+        
+        # Ensure proper permissions
+        chmod -R 775 storage public/themes
+        
     - name: 🧪 Run Tests (Basic Laravel)
-      # run: php artisan test || echo "No tests available yet"
-      run: php artisan test --filter="returns all channels" || echo "No tests available yet"
+      run: |
+        php artisan test --filter="returns all channels" || cat storage/logs/laravel.log
+        php artisan test --filter="should format the price based on the mentioned currency and place the symbol on the left side with space" || cat storage/logs/laravel.log
       continue-on-error: true
       env:
         LC_ALL: en_US.UTF-8
