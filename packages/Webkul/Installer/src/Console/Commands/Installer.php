@@ -177,7 +177,7 @@ class Installer extends Command
         if (! $hasExistingEnv) {
             $this->components->info('Creating the environment configuration file.');
 
-            // File::copy('.env.example', '.env');
+            File::copy('.env.example', '.env');
         } else {
             $this->components->info('Great! your environment configuration file already exists.');
         }
@@ -191,8 +191,8 @@ class Installer extends Command
         $this->loadEnvConfigs();
 
         // Skip key generation - APP_KEY is set via environment variables (GitHub Secrets)
-        // $this->warn('Step: Generating key...');
-        // $this->call('key:generate');
+        $this->warn('Step: Generating key...');
+        $this->call('key:generate');
 
         $this->warn('Step: Migrating all tables...');
 
