@@ -21,9 +21,7 @@ return [
     
     // 📦 FEATURE PACKAGES (Add incrementally):
     Webkul\Admin\Providers\AdminServiceProvider::class,
-    // Webkul\User\Providers\UserServiceProvider::class,
     Webkul\Attribute\Providers\AttributeServiceProvider::class,  // Required by Product
-    // Webkul\Category\Providers\CategoryServiceProvider::class,  // Already added above
     Webkul\Product\Providers\ProductServiceProvider::class,      // Required by Customer (wishlist)
     Webkul\Shop\Providers\ShopServiceProvider::class,          // Frontend shop interface (login, register, menu)
     Webkul\Checkout\Providers\CheckoutServiceProvider::class,   // Required by Customer (cart references)
