@@ -47,7 +47,7 @@ return [
     // Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
     // Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
     // Webkul\Notification\Providers\NotificationServiceProvider::class,
-    // Webkul\Paypal\Providers\PaypalServiceProvider::class,
+    Webkul\Paypal\Providers\PaypalServiceProvider::class,
     Webkul\Shipping\Providers\ShippingServiceProvider::class,
     // Webkul\Sitemap\Providers\SitemapServiceProvider::class,
     // Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,

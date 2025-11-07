@@ -21,7 +21,6 @@ return [
         
         // 📦 FEATURE MODULES (Add incrementally):
         \Webkul\Admin\Providers\ModuleServiceProvider::class,
-        // \Webkul\User\Providers\ModuleServiceProvider::class,
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,  // Required by Product
         \Webkul\Category\Providers\ModuleServiceProvider::class,
         \Webkul\Product\Providers\ModuleServiceProvider::class,    // Required by Customer (wishlist)
@@ -50,7 +49,7 @@ return [
         // \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,
         // \Webkul\DataTransfer\Providers\ModuleServiceProvider::class,
         // \Webkul\Notification\Providers\ModuleServiceProvider::class,
-        // \Webkul\Paypal\Providers\ModuleServiceProvider::class,
+        \Webkul\Paypal\Providers\ModuleServiceProvider::class,
         // \Webkul\Rule\Providers\ModuleServiceProvider::class,
         // \Webkul\Sitemap\Providers\ModuleServiceProvider::class,
         // \Webkul\SocialLogin\Providers\ModuleServiceProvider::class,
