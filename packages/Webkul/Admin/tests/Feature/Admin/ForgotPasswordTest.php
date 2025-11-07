@@ -11,9 +11,25 @@ it('should send the reset password link', function () {
     Notification::fake();
 
     // Debug: Check if Admin factory is working
-    echo "\n🔍 Debug: Creating admin user...\n";
-    $admin = Admin::factory()->create();
-    echo "✅ Debug: Admin created - ID: {$admin->id}, Email: {$admin->email}, Name: {$admin->name}\n";
+    echo "\n🔍 Debug: About to create admin user via factory...\n";
+    echo "🔍 Debug: Admin model class: " . Admin::class . "\n";
+    echo "🔍 Debug: Checking if AdminFactory class exists...\n";
+    
+    try {
+        echo "🔍 Debug: Creating factory instance...\n";
+        $factory = Admin::factory();
+        echo "✅ Debug: Factory instance created: " . get_class($factory) . "\n";
+        
+        echo "🔍 Debug: About to call definition() method...\n";
+        $admin = $factory->create();
+        echo "✅ Debug: Admin created successfully - ID: {$admin->id}, Email: {$admin->email}, Name: {$admin->name}\n";
+    } catch (\Exception $e) {
+        echo "❌ Debug: Factory creation failed!\n";
+        echo "❌ Debug: Error: " . $e->getMessage() . "\n";
+        echo "❌ Debug: File: " . $e->getFile() . " Line: " . $e->getLine() . "\n";
+        echo "❌ Debug: Stack trace:\n" . $e->getTraceAsString() . "\n";
+        throw $e;
+    }
 
     // Debug: Check if route exists
     echo "🔍 Debug: Checking routes...\n";
