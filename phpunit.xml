@@ -7,9 +7,9 @@
 >
     <testsuites>
         <!-- Admin package testsuites. -->
-        <!-- <testsuite name="Admin Feature Test">
+        <testsuite name="Admin Feature Test">
             <directory suffix="Test.php">packages/Webkul/Admin/tests/Feature</directory>
-        </testsuite> -->
+        </testsuite>
 
         <!-- Core package testsuites. -->
         <testsuite name="Core Unit Test">
