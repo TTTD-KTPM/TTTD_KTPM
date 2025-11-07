@@ -70,15 +70,7 @@ jobs:
     - name: 🗄️ Running Bagisto Installer
       run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
       
-    # - name: 🔍 Debug Configuration
-    #   run: |
-    #     echo "=== Checking core_config table ==="
-    #     php artisan tinker --execute="echo 'Core config count: ' . DB::table('core_config')->count(); echo PHP_EOL;"
-    #     echo "=== Checking config('core') ==="
-    #     php artisan tinker --execute="var_dump(config('core'));"
-    #     echo "=== Checking channels ==="
-    #     php artisan tinker --execute="echo 'Channels: ' . \Webkul\Core\Models\Channel::count(); echo PHP_EOL;"
-            
+  
     - name: 🧪 Running Pest Test
       run: vendor/bin/pest --colors=always 
        

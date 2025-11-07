@@ -27,7 +27,8 @@ return [
         \Webkul\Product\Providers\ModuleServiceProvider::class,    // Required by Customer (wishlist)
         \Webkul\Shop\Providers\ModuleServiceProvider::class,      // Frontend shop interface
         \Webkul\Checkout\Providers\ModuleServiceProvider::class,  // Required by Customer (cart references)
-        // \Webkul\Payment\Providers\ModuleServiceProvider::class,
+        \Webkul\Payment\Providers\ModuleServiceProvider::class,   // Payment methods and processing
+        \Webkul\Shipping\Providers\ModuleServiceProvider::class,  // Shipping methods and rates
         \Webkul\Sales\Providers\ModuleServiceProvider::class,    // Required by Customer (order references)
         \Webkul\Inventory\Providers\ModuleServiceProvider::class,  // Required by Product
         
@@ -51,7 +52,6 @@ return [
         // \Webkul\Notification\Providers\ModuleServiceProvider::class,
         // \Webkul\Paypal\Providers\ModuleServiceProvider::class,
         // \Webkul\Rule\Providers\ModuleServiceProvider::class,
-        // \Webkul\Shipping\Providers\ModuleServiceProvider::class,
         // \Webkul\Sitemap\Providers\ModuleServiceProvider::class,
         // \Webkul\SocialLogin\Providers\ModuleServiceProvider::class,
     ],
