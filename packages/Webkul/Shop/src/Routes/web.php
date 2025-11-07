@@ -3,7 +3,7 @@
 /**
  * Store front routes.
  */
-require 'store-front-routes.php';
+// require 'store-front-routes.php';
 
 /**
  * Customer routes. All routes related to customer
@@ -15,4 +15,4 @@ require 'customer-routes.php';
  * Checkout routes. All routes related to checkout like
  * cart, coupons, etc will be placed here.
  */
-require 'checkout-routes.php';
+// require 'checkout-routes.php';
