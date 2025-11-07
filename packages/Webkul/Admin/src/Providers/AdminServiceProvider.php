@@ -22,13 +22,13 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Route::middleware(['web', PreventRequestsDuringMaintenance::class])->group(__DIR__.'/../Routes/web.php');
+        Route::middleware(['web', PreventRequestsDuringMaintenance::class])->group(__DIR__.'/../Routes/web.php');
 
-        // $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'admin');
 
-        // $this->loadViewsFrom(__DIR__.'/../Resources/views', 'admin');
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'admin');
 
-        // Blade::anonymousComponentPath(__DIR__.'/../Resources/views/components', 'admin');
+        Blade::anonymousComponentPath(__DIR__.'/../Resources/views/components', 'admin');
 
         $this->app->register(EventServiceProvider::class);
     }
