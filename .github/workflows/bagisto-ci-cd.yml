@@ -1,0 +1,78 @@
+name: Bagisto CI/CD Pipeline
+
+on:
+  push:
+    branches: [ Triet-Customer ]
+  pull_request:
+    branches: [ Triet-Customer ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bagisto
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+      
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 🐘 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: curl, fileinfo, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
+        ini-values: error_reporting=E_ALL
+        tools: composer:v2
+                
+    - name: 📦 Cache Composer Dependencies
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: composer-
+        
+    - name: 🎵 Install Composer Dependencies
+      run: |
+        composer install --no-scripts --no-interaction
+      
+    - name: 📁 Create Storage Directories
+      run: |
+        mkdir -p storage/framework/cache
+        mkdir -p storage/framework/sessions  
+        mkdir -p storage/framework/views
+        mkdir -p storage/app/public
+        mkdir -p storage/logs
+        chmod -R 775 storage
+               
+    - name: 📝 Setting Environment
+      run: |
+        cp .env.example .env
+        sed -i "s|^\(APP_ENV=\s*\).*$|\1testing|" .env
+        sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env
+        sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.mysql.ports['3306'] }}|" .env
+        sed -i "s|^\(DB_DATABASE=\s*\).*$|\1bagisto|" .env
+        sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
+        sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
+        echo "=== .env configuration ==="
+        cat .env
+        
+    # - name: 🔑 Generate Application Key
+    #   run: php artisan key:generate --ansi
+        
+    - name: 🗄️ Running Bagisto Installer
+      run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
+      
+  
+    - name: 🧪 Running Pest Test
+      run: vendor/bin/pest --colors=always 
+       
+    - name: ✅ Basic Setup Complete
+      run: echo "🎉 Minimal backbone CI pipeline successful!"
