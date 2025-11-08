@@ -79,7 +79,10 @@ jobs:
       
   
     - name: 🧪 Running Shop Order Tests with Pest
-      run: vendor/bin/pest packages/Webkul/Shop/tests --colors=always --filter=Order
+      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Customers/OrdersTest.php --colors=always
+    
+    - name: 🧪 Running Admin Order Tests with Pest
+      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Sales/OrdersTest.php --colors=always
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
