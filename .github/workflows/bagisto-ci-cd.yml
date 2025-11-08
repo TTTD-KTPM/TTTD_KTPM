@@ -2,9 +2,9 @@ name: Bagisto CI/CD Pipeline
 
 on:
   push:
-    branches: [ Triet-Customer ]
+    branches: [ Triet-Customer, Toan-Order ]
   pull_request:
-    branches: [ Triet-Customer ]
+    branches: [ Triet-Customer, Toan-Order ]
 
 jobs:
   test:
