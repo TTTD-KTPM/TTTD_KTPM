@@ -4,18 +4,19 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Shop\Http\Controllers\BookingProductController;
 use Webkul\Shop\Http\Controllers\CompareController;
 use Webkul\Shop\Http\Controllers\HomeController;
-use Webkul\Shop\Http\Controllers\PageController;
+// use Webkul\Shop\Http\Controllers\PageController; // ❌ Removed - CMS Module
 use Webkul\Shop\Http\Controllers\ProductController;
 use Webkul\Shop\Http\Controllers\ProductsCategoriesProxyController;
 use Webkul\Shop\Http\Controllers\SearchController;
 use Webkul\Shop\Http\Controllers\SubscriptionController;
 
 /**
- * CMS pages.
+ * ❌ CMS Pages - Removed for optimization
+ * Uncomment to re-enable CMS page viewing
  */
-Route::get('page/{slug}', [PageController::class, 'view'])
-    ->name('shop.cms.page')
-    ->middleware('cache.response');
+// Route::get('page/{slug}', [PageController::class, 'view'])
+//     ->name('shop.cms.page')
+//     ->middleware('cache.response');
 
 /**
  * Fallback route.

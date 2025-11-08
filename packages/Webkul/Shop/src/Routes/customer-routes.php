@@ -8,7 +8,7 @@ use Webkul\Shop\Http\Controllers\Customer\Account\OrderController;
 use Webkul\Shop\Http\Controllers\Customer\Account\WishlistController;
 use Webkul\Shop\Http\Controllers\Customer\CustomerController;
 use Webkul\Shop\Http\Controllers\Customer\ForgotPasswordController;
-use Webkul\Shop\Http\Controllers\Customer\GDPRController;
+// use Webkul\Shop\Http\Controllers\Customer\GDPRController; // ❌ Removed - GDPR Module
 use Webkul\Shop\Http\Controllers\Customer\RegistrationController;
 use Webkul\Shop\Http\Controllers\Customer\ResetPasswordController;
 use Webkul\Shop\Http\Controllers\Customer\SessionController;
@@ -105,25 +105,22 @@ Route::prefix('customer')->group(function () {
             });
 
             /**
-             * GDPR.
+             * ❌ GDPR Module - Removed for optimization
+             * Uncomment to re-enable GDPR compliance features
              */
-            Route::controller(GDPRController::class)->prefix('gdpr')->group(function () {
-                Route::get('', 'index')->name('shop.customers.account.gdpr.index');
-
-                Route::post('', 'store')->name('shop.customers.account.gdpr.store');
-
-                Route::get('pdf-view', 'pdfView')->name('shop.customers.account.gdpr.pdf-view');
-
-                Route::get('html-view', 'htmlView')->name('shop.customers.account.gdpr.html-view');
-
-                Route::get('revoke/{id}', 'revoke')->name('shop.customers.account.gdpr.revoke');
-            });
+            // Route::controller(GDPRController::class)->prefix('gdpr')->group(function () {
+            //     Route::get('', 'index')->name('shop.customers.account.gdpr.index');
+            //     Route::post('', 'store')->name('shop.customers.account.gdpr.store');
+            //     Route::get('pdf-view', 'pdfView')->name('shop.customers.account.gdpr.pdf-view');
+            //     Route::get('html-view', 'htmlView')->name('shop.customers.account.gdpr.html-view');
+            //     Route::get('revoke/{id}', 'revoke')->name('shop.customers.account.gdpr.revoke');
+            // });
 
             /**
-             * Cookie consent.
+             * ❌ Cookie consent - Part of GDPR Module
              */
-            Route::get('your-cookie-consent-preferences', [GDPRController::class, 'cookieConsent'])
-                ->name('shop.customers.gdpr.cookie-consent');
+            // Route::get('your-cookie-consent-preferences', [GDPRController::class, 'cookieConsent'])
+            //     ->name('shop.customers.gdpr.cookie-consent');
 
             /**
              * Addresses.

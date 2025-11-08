@@ -76,15 +76,14 @@ Route::prefix('sales')->group(function () {
     });
 
     /**
-     * Transactions routes.
+     * ❌ Transactions - Hidden for optimization
+     * Uncomment to re-enable transaction tracking
      */
-    Route::controller(TransactionController::class)->prefix('transactions')->group(function () {
-        Route::get('', 'index')->name('admin.sales.transactions.index');
-
-        Route::post('create', 'store')->name('admin.sales.transactions.store');
-
-        Route::get('view/{id}', 'view')->name('admin.sales.transactions.view');
-    });
+    // Route::controller(TransactionController::class)->prefix('transactions')->group(function () {
+    //     Route::get('', 'index')->name('admin.sales.transactions.index');
+    //     Route::post('create', 'store')->name('admin.sales.transactions.store');
+    //     Route::get('view/{id}', 'view')->name('admin.sales.transactions.view');
+    // });
 
     Route::controller(CartController::class)->prefix('cart')->group(function () {
         Route::get('{id}', 'index')->name('admin.sales.cart.index');
@@ -108,9 +107,12 @@ Route::prefix('sales')->group(function () {
         Route::delete('{id}/coupon', 'destroyCoupon')->name('admin.sales.cart.remove_coupon');
     });
 
-    Route::controller(BookingController::class)->prefix('bookings')->group(function () {
-        Route::get('', 'index')->name('admin.sales.bookings.index');
-
-        Route::get('get', 'get')->name('admin.sales.bookings.get');
-    });
+    /**
+     * ❌ Bookings - Hidden for optimization
+     * Uncomment to re-enable booking product management
+     */
+    // Route::controller(BookingController::class)->prefix('bookings')->group(function () {
+    //     Route::get('', 'index')->name('admin.sales.bookings.index');
+    //     Route::get('get', 'get')->name('admin.sales.bookings.get');
+    // });
 });

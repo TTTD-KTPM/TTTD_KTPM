@@ -45,19 +45,29 @@ return [
         'route'      => 'admin.sales.refunds.index',
         'sort'       => 4,
         'icon'       => '',
-    ], [
-        'key'        => 'sales.transactions',
-        'name'       => 'admin::app.components.layouts.sidebar.transactions',
-        'route'      => 'admin.sales.transactions.index',
-        'sort'       => 5,
-        'icon'       => '',
-    ], [
-        'key'        => 'sales.bookings',
-        'name'       => 'admin::app.components.layouts.sidebar.booking-product',
-        'route'      => 'admin.sales.bookings.index',
-        'sort'       => 6,
-        'icon'       => '',
     ],
+    
+    /**
+     * ❌ Transactions - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'sales.transactions',
+    //     'name'       => 'admin::app.components.layouts.sidebar.transactions',
+    //     'route'      => 'admin.sales.transactions.index',
+    //     'sort'       => 5,
+    //     'icon'       => '',
+    // ],
+    
+    /**
+     * ❌ Bookings - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'sales.bookings',
+    //     'name'       => 'admin::app.components.layouts.sidebar.booking-product',
+    //     'route'      => 'admin.sales.bookings.index',
+    //     'sort'       => 6,
+    //     'icon'       => '',
+    // ],
 
     /**
      * Catalog.
@@ -121,24 +131,29 @@ return [
         'route'      => 'admin.customers.customers.review.index',
         'sort'       => 3,
         'icon'       => '',
-    ], [
-        'key'        => 'customers.gdpr_requests',
-        'name'       => 'admin::app.components.layouts.sidebar.gdpr-data-requests',
-        'route'      => 'admin.customers.gdpr.index',
-        'sort'       => 4,
-        'icon'       => '',
     ],
+    
+    /**
+     * ❌ GDPR Module - Removed for optimization
+     */
+    // [
+    //     'key'        => 'customers.gdpr_requests',
+    //     'name'       => 'admin::app.components.layouts.sidebar.gdpr-data-requests',
+    //     'route'      => 'admin.customers.gdpr.index',
+    //     'sort'       => 4,
+    //     'icon'       => '',
+    // ],
 
     /**
-     * CMS.
+     * ❌ CMS Module - Removed for optimization
      */
-    [
-        'key'        => 'cms',
-        'name'       => 'admin::app.components.layouts.sidebar.cms',
-        'route'      => 'admin.cms.index',
-        'sort'       => 5,
-        'icon'       => 'icon-cms',
-    ],
+    // [
+    //     'key'        => 'cms',
+    //     'name'       => 'admin::app.components.layouts.sidebar.cms',
+    //     'route'      => 'admin.cms.index',
+    //     'sort'       => 5,
+    //     'icon'       => 'icon-cms',
+    // ],
 
     /**
      * Marketing.
@@ -198,37 +213,47 @@ return [
         'route'      => 'admin.marketing.communications.subscribers.index',
         'sort'       => 3,
         'icon'       => '',
-    ], [
-        'key'        => 'marketing.search_seo',
-        'name'       => 'admin::app.components.layouts.sidebar.search-seo',
-        'route'      => 'admin.marketing.search_seo.url_rewrites.index',
-        'sort'       => 3,
-        'icon'       => '',
-    ], [
-        'key'        => 'marketing.search_seo.url_rewrites',
-        'name'       => 'admin::app.components.layouts.sidebar.url-rewrites',
-        'route'      => 'admin.marketing.search_seo.url_rewrites.index',
-        'sort'       => 1,
-        'icon'       => '',
-    ], [
-        'key'        => 'marketing.search_seo.search_terms',
-        'name'       => 'admin::app.components.layouts.sidebar.search-terms',
-        'route'      => 'admin.marketing.search_seo.search_terms.index',
-        'sort'       => 2,
-        'icon'       => '',
-    ], [
-        'key'        => 'marketing.search_seo.search_synonyms',
-        'name'       => 'admin::app.components.layouts.sidebar.search-synonyms',
-        'route'      => 'admin.marketing.search_seo.search_synonyms.index',
-        'sort'       => 3,
-        'icon'       => '',
-    ], [
-        'key'        => 'marketing.search_seo.sitemaps',
-        'name'       => 'admin::app.components.layouts.sidebar.sitemaps',
-        'route'      => 'admin.marketing.search_seo.sitemaps.index',
-        'sort'       => 4,
-        'icon'       => '',
     ],
+    
+    /**
+     * ❌ Search & SEO - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'marketing.search_seo',
+    //     'name'       => 'admin::app.components.layouts.sidebar.search-seo',
+    //     'route'      => 'admin.marketing.search_seo.url_rewrites.index',
+    //     'sort'       => 3,
+    //     'icon'       => '',
+    // ], [
+    //     'key'        => 'marketing.search_seo.url_rewrites',
+    //     'name'       => 'admin::app.components.layouts.sidebar.url-rewrites',
+    //     'route'      => 'admin.marketing.search_seo.url_rewrites.index',
+    //     'sort'       => 1,
+    //     'icon'       => '',
+    // ], [
+    //     'key'        => 'marketing.search_seo.search_terms',
+    //     'name'       => 'admin::app.components.layouts.sidebar.search-terms',
+    //     'route'      => 'admin.marketing.search_seo.search_terms.index',
+    //     'sort'       => 2,
+    //     'icon'       => '',
+    // ], [
+    //     'key'        => 'marketing.search_seo.search_synonyms',
+    //     'name'       => 'admin::app.components.layouts.sidebar.search-synonyms',
+    //     'route'      => 'admin.marketing.search_seo.search_synonyms.index',
+    //     'sort'       => 3,
+    //     'icon'       => '',
+    // ],
+    
+    /**
+     * ❌ Sitemap Module - Removed for optimization
+     */
+    // [
+    //     'key'        => 'marketing.search_seo.sitemaps',
+    //     'name'       => 'admin::app.components.layouts.sidebar.sitemaps',
+    //     'route'      => 'admin.marketing.search_seo.sitemaps.index',
+    //     'sort'       => 4,
+    //     'icon'       => '',
+    // ],
 
     /**
      * Reporting.
@@ -266,41 +291,65 @@ return [
     [
         'key'        => 'settings',
         'name'       => 'admin::app.components.layouts.sidebar.settings',
-        'route'      => 'admin.settings.locales.index',
+        'route'      => 'admin.settings.users.index',
         'sort'       => 8,
         'icon'       => 'icon-settings',
         'icon-class' => 'settings-icon',
-    ], [
-        'key'        => 'settings.locales',
-        'name'       => 'admin::app.components.layouts.sidebar.locales',
-        'route'      => 'admin.settings.locales.index',
-        'sort'       => 1,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.currencies',
-        'name'       => 'admin::app.components.layouts.sidebar.currencies',
-        'route'      => 'admin.settings.currencies.index',
-        'sort'       => 2,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.exchange_rates',
-        'name'       => 'admin::app.components.layouts.sidebar.exchange-rates',
-        'route'      => 'admin.settings.exchange_rates.index',
-        'sort'       => 3,
-        'icon'       => '',
-    ], [
+    ],
+    
+    /**
+     * ❌ Locales - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'settings.locales',
+    //     'name'       => 'admin::app.components.layouts.sidebar.locales',
+    //     'route'      => 'admin.settings.locales.index',
+    //     'sort'       => 1,
+    //     'icon'       => '',
+    // ],
+    
+    /**
+     * ❌ Currencies - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'settings.currencies',
+    //     'name'       => 'admin::app.components.layouts.sidebar.currencies',
+    //     'route'      => 'admin.settings.currencies.index',
+    //     'sort'       => 2,
+    //     'icon'       => '',
+    // ],
+    
+    /**
+     * ❌ Exchange Rates - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'settings.exchange_rates',
+    //     'name'       => 'admin::app.components.layouts.sidebar.exchange-rates',
+    //     'route'      => 'admin.settings.exchange_rates.index',
+    //     'sort'       => 3,
+    //     'icon'       => '',
+    // ],
+    
+    [
         'key'        => 'settings.inventory_sources',
         'name'       => 'admin::app.components.layouts.sidebar.inventory-sources',
         'route'      => 'admin.settings.inventory_sources.index',
         'sort'       => 4,
         'icon'       => '',
-    ], [
-        'key'        => 'settings.channels',
-        'name'       => 'admin::app.components.layouts.sidebar.channels',
-        'route'      => 'admin.settings.channels.index',
-        'sort'       => 5,
-        'icon'       => '',
-    ], [
+    ],
+    
+    /**
+     * ❌ Channels - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'settings.channels',
+    //     'name'       => 'admin::app.components.layouts.sidebar.channels',
+    //     'route'      => 'admin.settings.channels.index',
+    //     'sort'       => 5,
+    //     'icon'       => '',
+    // ],
+    
+    [
         'key'        => 'settings.users',
         'name'       => 'admin::app.components.layouts.sidebar.users',
         'route'      => 'admin.settings.users.index',
@@ -312,43 +361,58 @@ return [
         'route'      => 'admin.settings.roles.index',
         'sort'       => 7,
         'icon'       => '',
-    ], [
-        'key'        => 'settings.themes',
-        'name'       => 'admin::app.components.layouts.sidebar.themes',
-        'route'      => 'admin.settings.themes.index',
-        'sort'       => 8,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.taxes',
-        'name'       => 'admin::app.components.layouts.sidebar.taxes',
-        'route'      => 'admin.settings.taxes.categories.index',
-        'sort'       => 9,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.taxes.tax_categories',
-        'name'       => 'admin::app.components.layouts.sidebar.tax-categories',
-        'route'      => 'admin.settings.taxes.categories.index',
-        'sort'       => 1,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.taxes.tax_rates',
-        'name'       => 'admin::app.components.layouts.sidebar.tax-rates',
-        'route'      => 'admin.settings.taxes.rates.index',
-        'sort'       => 2,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.data_transfer',
-        'name'       => 'admin::app.components.layouts.sidebar.data-transfer',
-        'route'      => 'admin.settings.data_transfer.imports.index',
-        'sort'       => 10,
-        'icon'       => '',
-    ], [
-        'key'        => 'settings.data_transfer.imports',
-        'name'       => 'admin::app.components.layouts.sidebar.imports',
-        'route'      => 'admin.settings.data_transfer.imports.index',
-        'sort'       => 1,
-        'icon'       => '',
     ],
+    
+    /**
+     * ❌ Themes - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'settings.themes',
+    //     'name'       => 'admin::app.components.layouts.sidebar.themes',
+    //     'route'      => 'admin.settings.themes.index',
+    //     'sort'       => 8,
+    //     'icon'       => '',
+    // ],
+    
+    /**
+     * ❌ Taxes - Hidden for optimization
+     */
+    // [
+    //     'key'        => 'settings.taxes',
+    //     'name'       => 'admin::app.components.layouts.sidebar.taxes',
+    //     'route'      => 'admin.settings.taxes.categories.index',
+    //     'sort'       => 9,
+    //     'icon'       => '',
+    // ], [
+    //     'key'        => 'settings.taxes.tax_categories',
+    //     'name'       => 'admin::app.components.layouts.sidebar.tax-categories',
+    //     'route'      => 'admin.settings.taxes.categories.index',
+    //     'sort'       => 1,
+    //     'icon'       => '',
+    // ], [
+    //     'key'        => 'settings.taxes.tax_rates',
+    //     'name'       => 'admin::app.components.layouts.sidebar.tax-rates',
+    //     'route'      => 'admin.settings.taxes.rates.index',
+    //     'sort'       => 2,
+    //     'icon'       => '',
+    // ],
+    
+    /**
+     * ❌ DataTransfer Module - Removed for optimization
+     */
+    // [
+    //     'key'        => 'settings.data_transfer',
+    //     'name'       => 'admin::app.components.layouts.sidebar.data-transfer',
+    //     'route'      => 'admin.settings.data_transfer.imports.index',
+    //     'sort'       => 10,
+    //     'icon'       => '',
+    // ], [
+    //     'key'        => 'settings.data_transfer.imports',
+    //     'name'       => 'admin::app.components.layouts.sidebar.imports',
+    //     'route'      => 'admin.settings.data_transfer.imports.index',
+    //     'sort'       => 1,
+    //     'icon'       => '',
+    // ],
 
     /**
      * Configuration.
