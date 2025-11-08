@@ -76,6 +76,13 @@ jobs:
       
     - name: 🔧 Setup Storage Link
       run: php artisan storage:link
+    
+    - name: 🧹 Clear Application Cache
+      run: |
+        php artisan config:clear
+        php artisan route:clear
+        php artisan view:clear
+        php artisan cache:clear
       
   
     - name: 🧪 Running Shop Order Tests with Pest
