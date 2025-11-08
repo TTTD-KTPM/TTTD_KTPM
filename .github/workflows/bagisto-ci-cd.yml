@@ -78,9 +78,8 @@ jobs:
       run: php artisan storage:link
       
   
-    # Temporarily disabled - test files removed for optimization
-    # - name: 🧪 Running Pest Test
-    #   run: vendor/bin/pest --colors=always 
+    - name: 🧪 Running Order Tests with Pest
+      run: vendor/bin/pest --colors=always --filter=Order
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
