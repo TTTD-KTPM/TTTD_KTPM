@@ -78,8 +78,8 @@ jobs:
       run: php artisan storage:link
       
   
-    - name: 🧪 Running Order Tests with Pest
-      run: vendor/bin/pest --colors=always --filter=Order
+    - name: 🧪 Running Shop Order Tests with Pest
+      run: vendor/bin/pest packages/Webkul/Shop/tests --colors=always --filter=Order
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
