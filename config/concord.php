@@ -16,7 +16,7 @@ return [
     'modules' => [
         \Webkul\Admin\Providers\ModuleServiceProvider::class,
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,
-        \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,
+        // \Webkul\BookingProduct\Providers\ModuleServiceProvider::class, // ❌ Removed - Booking Products
         // \Webkul\CMS\Providers\ModuleServiceProvider::class, // ❌ Removed - CMS Pages
         \Webkul\CartRule\Providers\ModuleServiceProvider::class,
         \Webkul\CatalogRule\Providers\ModuleServiceProvider::class,
