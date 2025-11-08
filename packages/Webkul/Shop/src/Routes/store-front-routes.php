@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Shop\Http\Controllers\BookingProductController;
+// use Webkul\Shop\Http\Controllers\BookingProductController; // ❌ Removed - BookingProduct Module
 use Webkul\Shop\Http\Controllers\CompareController;
 use Webkul\Shop\Http\Controllers\HomeController;
 // use Webkul\Shop\Http\Controllers\PageController; // ❌ Removed - CMS Module
@@ -75,7 +75,7 @@ Route::controller(ProductController::class)->group(function () {
 });
 
 /**
- * Booking products
+ * Booking products - Disabled (BookingProduct module removed)
  */
-Route::get('booking-slots/{id}', [BookingProductController::class, 'index'])
-    ->name('shop.booking-product.slots.index');
+// Route::get('booking-slots/{id}', [BookingProductController::class, 'index'])
+//     ->name('shop.booking-product.slots.index');
