@@ -69,8 +69,13 @@ jobs:
     - name: 🔑 Generate Application Key
       run: php artisan key:generate --ansi
         
-    - name: 🗄️ Running Bagisto Installer
-      run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
+    - name: 🗄️ Run Database Migrations
+      run: |
+        php artisan migrate:fresh --force
+        php artisan db:seed --force
+      
+    - name: 🔧 Setup Storage Link
+      run: php artisan storage:link
       
   
     - name: 🧪 Running Pest Test
