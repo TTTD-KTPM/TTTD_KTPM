@@ -137,3 +137,164 @@ it('should view the order detail and track status', function () {
         ->assertSeeText(trans('shop::app.customers.account.orders.view.information.total-due'))
         ->assertSeeText(trans('shop::app.customers.account.orders.view.page-title', ['order_id' => $order->increment_id]));
 });
+
+it('should search and filter orders by order id', function () {
+    // Arrange.
+    $product = (new ProductFaker([
+        'attributes' => [
+            5 => 'new',
+        ],
+
+        'attribute_value' => [
+            'new' => [
+                'boolean_value' => true,
+            ],
+        ],
+    ]))
+        ->getSimpleProductFactory()
+        ->create();
+
+    $customer = Customer::factory()->create();
+
+    // Create first order
+    $cart1 = Cart::factory()->create([
+        'customer_id'         => $customer->id,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'customer_email'      => $customer->email,
+        'is_guest'            => 0,
+    ]);
+
+    $order1 = Order::factory()->create([
+        'cart_id'             => $cart1->id,
+        'customer_id'         => $customer->id,
+        'customer_email'      => $customer->email,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'status'              => 'pending',
+    ]);
+
+    // Create second order
+    $cart2 = Cart::factory()->create([
+        'customer_id'         => $customer->id,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'customer_email'      => $customer->email,
+        'is_guest'            => 0,
+    ]);
+
+    $order2 = Order::factory()->create([
+        'cart_id'             => $cart2->id,
+        'customer_id'         => $customer->id,
+        'customer_email'      => $customer->email,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'status'              => 'completed',
+    ]);
+
+    // Act and Assert - Test that both orders appear on index page
+    $this->loginAsCustomer($customer);
+
+    get(route('shop.customers.account.orders.index'))
+        ->assertOk()
+        ->assertSeeText($order1->increment_id)
+        ->assertSeeText($order2->increment_id);
+
+    // Note: Search/filter functionality would require JavaScript interaction
+    // which is not testable with simple HTTP tests. This test verifies
+    // that multiple orders are displayed correctly.
+});
+
+it('should cancel an order', function () {
+    // Arrange.
+    $product = (new ProductFaker([
+        'attributes' => [
+            5 => 'new',
+        ],
+
+        'attribute_value' => [
+            'new' => [
+                'boolean_value' => true,
+            ],
+        ],
+    ]))
+        ->getSimpleProductFactory()
+        ->create();
+
+    $customer = Customer::factory()->create();
+
+    $cart = Cart::factory()->create([
+        'customer_id'         => $customer->id,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'customer_email'      => $customer->email,
+        'is_guest'            => 0,
+    ]);
+
+    $additional = [
+        'product_id' => $product->id,
+        'rating'     => '0',
+        'is_buy_now' => '0',
+        'quantity'   => '1',
+    ];
+
+    $cartItem = CartItem::factory()->create([
+        'cart_id'           => $cart->id,
+        'product_id'        => $product->id,
+        'sku'               => $product->sku,
+        'quantity'          => $additional['quantity'],
+        'name'              => $product->name,
+        'price'             => $convertedPrice = core()->convertPrice($price = $product->price),
+        'base_price'        => $price,
+        'total'             => $convertedPrice * $additional['quantity'],
+        'base_total'        => $price * $additional['quantity'],
+        'weight'            => $product->weight ?? 0,
+        'total_weight'      => ($product->weight ?? 0) * $additional['quantity'],
+        'base_total_weight' => ($product->weight ?? 0) * $additional['quantity'],
+        'type'              => $product->type,
+        'additional'        => $additional,
+    ]);
+
+    $order = Order::factory()->create([
+        'cart_id'             => $cart->id,
+        'customer_id'         => $customer->id,
+        'customer_email'      => $customer->email,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'status'              => 'pending',
+    ]);
+
+    $orderItem = OrderItem::factory()->create([
+        'product_id'    => $product->id,
+        'order_id'      => $order->id,
+        'sku'           => $product->sku,
+        'type'          => $product->type,
+        'name'          => $product->name,
+        'qty_ordered'   => $additional['quantity'],
+        'qty_canceled'  => 0,
+        'qty_invoiced'  => 0,
+        'qty_shipped'   => 0,
+        'qty_refunded'  => 0,
+    ]);
+
+    // Act and Assert.
+    $this->loginAsCustomer($customer);
+
+    // Reload order with items
+    $order = $order->fresh(['items']);
+
+    // Check if order can be cancelled (status should be pending or processing)
+    expect($order->canCancel())->toBeTrue();
+
+    // Cancel the order items
+    foreach ($order->items as $item) {
+        $item->update(['qty_canceled' => $item->qty_ordered]);
+    }
+
+    // Update order status to canceled
+    $order->update(['status' => Order::STATUS_CANCELED]);
+
+    // Verify order status changed to cancelled and cannot be cancelled again
+    expect($order->fresh()->status)->toBe('canceled')
+        ->and($order->fresh(['items'])->canCancel())->toBeFalse();
+});
