@@ -64,8 +64,8 @@ jobs:
         echo "=== .env configuration ==="
         cat .env
         
-    # - name: 🔑 Generate Application Key
-    #   run: php artisan key:generate --ansi
+    - name: 🔑 Generate Application Key
+      run: php artisan key:generate --ansi
         
     - name: 🗄️ Running Bagisto Installer
       run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
