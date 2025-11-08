@@ -83,6 +83,7 @@ jobs:
         php artisan route:clear
         php artisan view:clear
         php artisan cache:clear
+        php artisan optimize
       
   
     - name: 🧪 Running Shop Order Tests with Pest
