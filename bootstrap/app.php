@@ -40,6 +40,13 @@ return Application::configure(basePath: dirname(__DIR__))
          * Add the overridden middleware at the end of the list.
          */
         $middleware->replaceInGroup('web', BaseEncryptCookies::class, EncryptCookies::class);
+        
+        /**
+         * Disable CSRF middleware during testing
+         */
+        if (app()->runningUnitTests()) {
+            $middleware->remove(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        }
     })
     ->withSchedule(function (Schedule $schedule) {
         //

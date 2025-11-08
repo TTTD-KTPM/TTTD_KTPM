@@ -87,7 +87,7 @@ jobs:
       
   
     - name: 🧪 Running Shop Order Tests with Pest
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Customers/OrdersTest.php --colors=always
+      run: php artisan test --testsuite=Package --filter=OrdersTest
     
     - name: 🧪 Running Admin Order Tests with Pest
       run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Sales/OrdersTest.php --colors=always
