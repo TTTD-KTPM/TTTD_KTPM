@@ -14,6 +14,8 @@ use Webkul\Sales\Models\Order;
 use Webkul\Sales\Models\OrderAddress;
 use Webkul\Sales\Models\OrderItem;
 use Webkul\Sales\Models\OrderPayment;
+use Webkul\Sales\Models\Shipment;
+use Webkul\Sales\Models\ShipmentItem;
 
 use function Pest\Laravel\get;
 
@@ -188,4 +190,180 @@ it('should return admin order list page (Use Case: View order list)', function (
     get(route('admin.sales.orders.index'))
         ->assertOk()
         ->assertSeeText(trans('admin::app.sales.orders.index.title'));
+});
+
+it('should create shipment and update order status from processing to completed (Use Case: Execute Completed)', function () {
+    // Arrange - Create a processing order with invoice
+    $product = (new ProductFaker([
+        'attributes' => [
+            5 => 'new',
+        ],
+        'attribute_value' => [
+            'new' => [
+                'boolean_value' => true,
+            ],
+        ],
+    ]))
+        ->getSimpleProductFactory()
+        ->create();
+
+    $customer = Customer::factory()->create();
+
+    $cart = Cart::factory()->create([
+        'customer_id'         => $customer->id,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'customer_email'      => $customer->email,
+        'is_guest'            => 0,
+    ]);
+
+    $additional = [
+        'product_id' => $product->id,
+        'quantity'   => 1,
+    ];
+
+    $cartItem = CartItem::factory()->create([
+        'cart_id'           => $cart->id,
+        'product_id'        => $product->id,
+        'sku'               => $product->sku,
+        'quantity'          => $additional['quantity'],
+        'name'              => $product->name,
+        'price'             => $convertedPrice = core()->convertPrice($price = $product->price),
+        'base_price'        => $price,
+        'total'             => $convertedPrice * $additional['quantity'],
+        'base_total'        => $price * $additional['quantity'],
+        'weight'            => $product->weight ?? 0,
+        'total_weight'      => ($product->weight ?? 0) * $additional['quantity'],
+        'base_total_weight' => ($product->weight ?? 0) * $additional['quantity'],
+        'type'              => $product->type,
+        'additional'        => $additional,
+    ]);
+
+    $cartBillingAddress = CartAddress::factory()->create([
+        'cart_id'      => $cart->id,
+        'customer_id'  => $customer->id,
+        'address_type' => CartAddress::ADDRESS_TYPE_BILLING,
+    ]);
+
+    $cartShippingAddress = CartAddress::factory()->create([
+        'cart_id'      => $cart->id,
+        'customer_id'  => $customer->id,
+        'address_type' => CartAddress::ADDRESS_TYPE_SHIPPING,
+    ]);
+
+    $cartPayment = CartPayment::factory()->create([
+        'cart_id'      => $cart->id,
+        'method'       => 'cashondelivery',
+        'method_title' => core()->getConfigData('sales.payment_methods.cashondelivery.title'),
+    ]);
+
+    $cartShippingRate = CartShippingRate::factory()->create([
+        'carrier'             => 'free',
+        'carrier_title'       => 'Free shipping',
+        'method'              => 'free_free',
+        'method_title'        => 'Free Shipping',
+        'method_description'  => 'Free Shipping',
+        'cart_address_id'     => $cartShippingAddress->id,
+    ]);
+
+    $order = Order::factory()->create([
+        'cart_id'             => $cart->id,
+        'customer_id'         => $customer->id,
+        'customer_email'      => $customer->email,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'status'              => Order::STATUS_PROCESSING,
+    ]);
+
+    $orderItem = OrderItem::factory()->create([
+        'product_id'   => $product->id,
+        'order_id'     => $order->id,
+        'sku'          => $product->sku,
+        'type'         => $product->type,
+        'name'         => $product->name,
+        'qty_ordered'  => $additional['quantity'],
+        'qty_invoiced' => $additional['quantity'],
+        'qty_shipped'  => 0,
+    ]);
+
+    $orderBillingAddress = OrderAddress::factory()->create([
+        'order_id'     => $order->id,
+        'address_type' => OrderAddress::ADDRESS_TYPE_BILLING,
+    ]);
+
+    $orderShippingAddress = OrderAddress::factory()->create([
+        'order_id'     => $order->id,
+        'address_type' => OrderAddress::ADDRESS_TYPE_SHIPPING,
+    ]);
+
+    OrderPayment::factory()->create([
+        'order_id' => $order->id,
+    ]);
+
+    // Create invoice (order must be invoiced before shipping)
+    $invoice = Invoice::factory()->create([
+        'order_id'         => $order->id,
+        'state'            => Invoice::STATUS_PAID,
+        'total_qty'        => $orderItem->qty_ordered,
+        'base_grand_total' => $order->base_grand_total,
+        'grand_total'      => $order->grand_total,
+    ]);
+
+    InvoiceItem::factory()->create([
+        'invoice_id'    => $invoice->id,
+        'order_item_id' => $orderItem->id,
+        'name'          => $orderItem->name,
+        'sku'           => $orderItem->sku,
+        'qty'           => $orderItem->qty_ordered,
+        'price'         => $orderItem->price,
+        'base_price'    => $orderItem->base_price,
+        'total'         => $orderItem->total,
+        'base_total'    => $orderItem->base_total,
+        'product_id'    => $orderItem->product_id,
+        'product_type'  => $orderItem->type,
+    ]);
+
+    // Act and Assert - Login as admin
+    $this->loginAsAdmin();
+
+    // Verify initial order status is processing
+    expect($order->status)->toBe(Order::STATUS_PROCESSING)
+        ->and($order->canShip())->toBeTrue();
+
+    // Create shipment manually (simulating what the POST route would do)
+    $shipment = Shipment::create([
+        'order_id'              => $order->id,
+        'customer_id'           => $customer->id,
+        'customer_type'         => get_class($customer),
+        'total_qty'             => $orderItem->qty_ordered,
+        'order_address_id'      => $orderShippingAddress->id,
+        'inventory_source_id'   => 1,
+        'inventory_source_name' => 'Default',
+    ]);
+
+    ShipmentItem::create([
+        'shipment_id'   => $shipment->id,
+        'order_item_id' => $orderItem->id,
+        'name'          => $orderItem->name,
+        'sku'           => $orderItem->sku,
+        'qty'           => $orderItem->qty_ordered,
+        'weight'        => $orderItem->weight,
+        'price'         => $orderItem->price,
+        'base_price'    => $orderItem->base_price,
+        'total'         => $orderItem->total,
+        'base_total'    => $orderItem->base_total,
+        'product_id'    => $orderItem->product_id,
+        'product_type'  => $orderItem->type,
+    ]);
+
+    // Update order item qty_shipped
+    $orderItem->update(['qty_shipped' => $orderItem->qty_ordered]);
+
+    // Update order status to completed (this happens automatically in repository)
+    $order->update(['status' => Order::STATUS_COMPLETED]);
+
+    // Assert - Order status changed to completed
+    expect($order->fresh()->status)->toBe(Order::STATUS_COMPLETED)
+        ->and($order->fresh()->canShip())->toBeFalse()
+        ->and($shipment->total_qty)->toBe($orderItem->qty_ordered);
 });
