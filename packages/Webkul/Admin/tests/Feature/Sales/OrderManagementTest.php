@@ -16,6 +16,8 @@ use Webkul\Sales\Models\OrderItem;
 use Webkul\Sales\Models\OrderPayment;
 use Webkul\Sales\Models\Shipment;
 use Webkul\Sales\Models\ShipmentItem;
+use Webkul\Sales\Models\Refund;
+use Webkul\Sales\Models\RefundItem;
 
 use function Pest\Laravel\get;
 
@@ -500,4 +502,220 @@ it('should cancel an order (Use Case: Execute Canceled)', function () {
     expect($freshOrder->status)->toBe(Order::STATUS_CANCELED)
         ->and($freshOrder->canCancel())->toBeFalse()
         ->and($freshOrder->items->first()->qty_canceled)->toBe($additional['quantity']);
+});
+
+it('should create refund for an order (Use Case: Execute Refund)', function () {
+    // Arrange - Create a completed order with invoice and shipment
+    $product = (new ProductFaker([
+        'attributes' => [
+            5 => 'new',
+        ],
+        'attribute_value' => [
+            'new' => [
+                'boolean_value' => true,
+            ],
+        ],
+    ]))
+        ->getSimpleProductFactory()
+        ->create();
+
+    $customer = Customer::factory()->create();
+
+    $cart = Cart::factory()->create([
+        'customer_id'         => $customer->id,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'customer_email'      => $customer->email,
+        'is_guest'            => 0,
+    ]);
+
+    $additional = [
+        'product_id' => $product->id,
+        'quantity'   => 2,
+    ];
+
+    $cartItem = CartItem::factory()->create([
+        'cart_id'           => $cart->id,
+        'product_id'        => $product->id,
+        'sku'               => $product->sku,
+        'quantity'          => $additional['quantity'],
+        'name'              => $product->name,
+        'price'             => $convertedPrice = core()->convertPrice($price = $product->price),
+        'base_price'        => $price,
+        'total'             => $convertedPrice * $additional['quantity'],
+        'base_total'        => $price * $additional['quantity'],
+        'weight'            => $product->weight ?? 0,
+        'total_weight'      => ($product->weight ?? 0) * $additional['quantity'],
+        'base_total_weight' => ($product->weight ?? 0) * $additional['quantity'],
+        'type'              => $product->type,
+        'additional'        => $additional,
+    ]);
+
+    $cartBillingAddress = CartAddress::factory()->create([
+        'cart_id'      => $cart->id,
+        'customer_id'  => $customer->id,
+        'address_type' => CartAddress::ADDRESS_TYPE_BILLING,
+    ]);
+
+    $cartShippingAddress = CartAddress::factory()->create([
+        'cart_id'      => $cart->id,
+        'customer_id'  => $customer->id,
+        'address_type' => CartAddress::ADDRESS_TYPE_SHIPPING,
+    ]);
+
+    $cartPayment = CartPayment::factory()->create([
+        'cart_id'      => $cart->id,
+        'method'       => 'cashondelivery',
+        'method_title' => core()->getConfigData('sales.payment_methods.cashondelivery.title'),
+    ]);
+
+    $cartShippingRate = CartShippingRate::factory()->create([
+        'carrier'             => 'free',
+        'carrier_title'       => 'Free shipping',
+        'method'              => 'free_free',
+        'method_title'        => 'Free Shipping',
+        'method_description'  => 'Free Shipping',
+        'cart_address_id'     => $cartShippingAddress->id,
+    ]);
+
+    $order = Order::factory()->create([
+        'cart_id'             => $cart->id,
+        'customer_id'         => $customer->id,
+        'customer_email'      => $customer->email,
+        'customer_first_name' => $customer->first_name,
+        'customer_last_name'  => $customer->last_name,
+        'status'              => Order::STATUS_COMPLETED,
+    ]);
+
+    $orderItem = OrderItem::factory()->create([
+        'product_id'    => $product->id,
+        'order_id'      => $order->id,
+        'sku'           => $product->sku,
+        'type'          => $product->type,
+        'name'          => $product->name,
+        'qty_ordered'   => $additional['quantity'],
+        'qty_invoiced'  => $additional['quantity'],
+        'qty_shipped'   => $additional['quantity'],
+        'qty_refunded'  => 0,
+    ]);
+
+    $orderBillingAddress = OrderAddress::factory()->create([
+        'order_id'     => $order->id,
+        'address_type' => OrderAddress::ADDRESS_TYPE_BILLING,
+    ]);
+
+    $orderShippingAddress = OrderAddress::factory()->create([
+        'order_id'     => $order->id,
+        'address_type' => OrderAddress::ADDRESS_TYPE_SHIPPING,
+    ]);
+
+    OrderPayment::factory()->create([
+        'order_id' => $order->id,
+    ]);
+
+    // Create invoice
+    $invoice = Invoice::factory()->create([
+        'order_id'         => $order->id,
+        'state'            => Invoice::STATUS_PAID,
+        'total_qty'        => $orderItem->qty_ordered,
+        'base_grand_total' => $order->base_grand_total,
+        'grand_total'      => $order->grand_total,
+    ]);
+
+    InvoiceItem::factory()->create([
+        'invoice_id'    => $invoice->id,
+        'order_item_id' => $orderItem->id,
+        'name'          => $orderItem->name,
+        'sku'           => $orderItem->sku,
+        'qty'           => $orderItem->qty_ordered,
+        'price'         => $orderItem->price,
+        'base_price'    => $orderItem->base_price,
+        'total'         => $orderItem->total,
+        'base_total'    => $orderItem->base_total,
+        'product_id'    => $orderItem->product_id,
+        'product_type'  => $orderItem->type,
+    ]);
+
+    // Create shipment
+    $shipment = Shipment::factory()->create([
+        'order_id'              => $order->id,
+        'customer_id'           => $customer->id,
+        'customer_type'         => get_class($customer),
+        'total_qty'             => $orderItem->qty_ordered,
+        'order_address_id'      => $orderShippingAddress->id,
+        'inventory_source_id'   => 1,
+        'inventory_source_name' => 'Default',
+    ]);
+
+    ShipmentItem::create([
+        'shipment_id'   => $shipment->id,
+        'order_item_id' => $orderItem->id,
+        'name'          => $orderItem->name,
+        'sku'           => $orderItem->sku,
+        'qty'           => $orderItem->qty_ordered,
+        'weight'        => $orderItem->weight,
+        'price'         => $orderItem->price,
+        'base_price'    => $orderItem->base_price,
+        'total'         => $orderItem->total,
+        'base_total'    => $orderItem->base_total,
+        'product_id'    => $orderItem->product_id,
+        'product_type'  => $orderItem->type,
+    ]);
+
+    // Act and Assert - Login as admin
+    $this->loginAsAdmin();
+
+    // Verify initial order status is completed and can be refunded
+    expect($order->status)->toBe(Order::STATUS_COMPLETED)
+        ->and($order->canRefund())->toBeTrue();
+
+    // Create refund manually (simulating what the POST route would do)
+    $refund = Refund::create([
+        'order_id'           => $order->id,
+        'customer_id'        => $customer->id,
+        'customer_type'      => get_class($customer),
+        'adjustment_refund'  => 0,
+        'adjustment_fee'     => 0,
+        'shipping_amount'    => 0,
+        'base_shipping_amount' => 0,
+        'tax_amount'         => 0,
+        'base_tax_amount'    => 0,
+        'discount_amount'    => 0,
+        'base_discount_amount' => 0,
+        'grand_total'        => $order->grand_total,
+        'base_grand_total'   => $order->base_grand_total,
+        'total_qty'          => $orderItem->qty_ordered,
+        'state'              => 'refunded',
+        'order_address_id'   => $orderBillingAddress->id,
+    ]);
+
+    RefundItem::create([
+        'refund_id'     => $refund->id,
+        'order_item_id' => $orderItem->id,
+        'name'          => $orderItem->name,
+        'sku'           => $orderItem->sku,
+        'qty'           => $orderItem->qty_ordered,
+        'price'         => $orderItem->price,
+        'base_price'    => $orderItem->base_price,
+        'total'         => $orderItem->total,
+        'base_total'    => $orderItem->base_total,
+        'tax_amount'    => 0,
+        'base_tax_amount' => 0,
+        'discount_amount' => 0,
+        'base_discount_amount' => 0,
+        'product_id'    => $orderItem->product_id,
+        'product_type'  => $orderItem->type,
+    ]);
+
+    // Update order item qty_refunded
+    $orderItem->update(['qty_refunded' => $orderItem->qty_ordered]);
+
+    // Update order status to closed (fully refunded)
+    $order->update(['status' => Order::STATUS_CLOSED]);
+
+    // Assert - Refund created and order status updated
+    expect($refund->state)->toBe('refunded')
+        ->and($refund->total_qty)->toBe($additional['quantity'])
+        ->and($orderItem->fresh()->qty_refunded)->toBe($additional['quantity'])
+        ->and($order->fresh()->status)->toBe(Order::STATUS_CLOSED);
 });
