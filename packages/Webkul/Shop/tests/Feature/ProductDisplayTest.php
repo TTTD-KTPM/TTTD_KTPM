@@ -150,4 +150,32 @@ it('should handle out of stock products correctly', function () {
     expect($response->getContent())->toContain('out-of-stock');
 });
 
+it('should display related products section', function () {
+    // Arrange
+    $mainProduct = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Main Product',
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    $relatedProduct = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Related Product',
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    // Attach related product
+    $mainProduct->related_products()->attach($relatedProduct->id);
+
+    // Act
+    $response = get(route('shop.product_or_category.index', $mainProduct->url_key));
+
+    // Assert
+    $response->assertOk();
+    $response->assertSeeText('Main Product');
+    // Related product should be visible in related products section
+    expect($response->getContent())->toContain('Related Product');
+});
+
+
 
