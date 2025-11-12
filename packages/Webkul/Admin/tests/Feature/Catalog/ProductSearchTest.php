@@ -82,3 +82,25 @@ it('should sort products by price ascending', function () {
     // Assert - first product should have lowest price
     expect($response['records'][0]['product_id'])->toBe($product2->id);
 });
+
+it('should sort products by price descending', function () {
+    // Arrange
+    $product1 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 500]);
+    $product2 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 100]);
+    $product3 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 300]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    $response = getJson(route('admin.catalog.products.index', [
+        'sort'  => 'price',
+        'order' => 'desc',
+    ]), [
+        'X-Requested-With' => 'XMLHttpRequest',
+    ])
+        ->assertOk()
+        ->json();
+
+    // Assert - first product should have highest price
+    expect($response['records'][0]['product_id'])->toBe($product1->id);
+});
