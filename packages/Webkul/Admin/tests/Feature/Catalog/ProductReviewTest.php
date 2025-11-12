@@ -208,3 +208,34 @@ it('should mass update product review status', function () {
     $this->assertDatabaseHas('product_reviews', ['id' => $review1->id, 'status' => 'approved']);
     $this->assertDatabaseHas('product_reviews', ['id' => $review2->id, 'status' => 'approved']);
 });
+
+it('should validate rating is between 1 and 5', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create();
+
+    // Act and Assert - Invalid rating (below 1)
+    $this->loginAsAdmin();
+
+    postJson(route('admin.catalog.products.reviews.store'), [
+        'title'      => 'Invalid Rating Review',
+        'rating'     => 0,
+        'comment'    => 'Rating too low',
+        'status'     => 'approved',
+        'product_id' => $product->id,
+        'name'       => 'Test Customer',
+    ])
+        ->assertStatus(422)
+        ->assertJsonValidationErrorFor('rating');
+
+    // Act and Assert - Invalid rating (above 5)
+    postJson(route('admin.catalog.products.reviews.store'), [
+        'title'      => 'Invalid Rating Review',
+        'rating'     => 6,
+        'comment'    => 'Rating too high',
+        'status'     => 'approved',
+        'product_id' => $product->id,
+        'name'       => 'Test Customer',
+    ])
+        ->assertStatus(422)
+        ->assertJsonValidationErrorFor('rating');
+});
