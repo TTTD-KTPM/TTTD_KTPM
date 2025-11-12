@@ -93,13 +93,20 @@ jobs:
     # - name: 🧪 Running Admin Order Tests with Pest
     #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Sales/OrdersTest.php --colors=always
     
-    - name: 🧪 Running Product Catalog Tests
-      run: |
-        vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/InventoryTest.php --colors=always
-        vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/ProductReviewTest.php --colors=always
-        vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/ProductSearchTest.php --colors=always
-        vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/ProductTest.php --colors=always
-        vendor/bin/pest packages/Webkul/Shop/tests/Feature/ProductDisplayTest.php --colors=always
+    - name: 🧪 Running Product Catalog Inventory Tests
+      run: php artisan test --testsuite=Package --filter=InventoryTest
+    
+    - name: 🧪 Running Product Catalog Review Tests
+      run: php artisan test --testsuite=Package --filter=ProductReviewTest
+    
+    - name: 🧪 Running Product Catalog Search Tests
+      run: php artisan test --testsuite=Package --filter=ProductSearchTest
+    
+    - name: 🧪 Running Product Catalog Product Tests
+      run: php artisan test --testsuite=Package --filter=ProductTest
+    
+    - name: 🧪 Running Product Display Tests (Shop)
+      run: php artisan test --testsuite=Package --filter=ProductDisplayTest
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
