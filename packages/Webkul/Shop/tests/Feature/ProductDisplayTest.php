@@ -210,6 +210,45 @@ it('should filter products by price in category', function () {
     $response->assertDontSee('Expensive Product');
 });
 
+it('should sort products in category by different criteria', function () {
+    // Arrange
+    $category = (new CategoryFaker)->factory()->create([
+        'name'   => 'Electronics',
+        'status' => 1,
+    ]);
+
+    $productA = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Product A',
+        'price'                => 100,
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    $productB = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Product B',
+        'price'                => 200,
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    $productA->categories()->attach($category->id);
+    $productB->categories()->attach($category->id);
+
+    // Act - Sort by price ascending
+    $response = get(route('shop.product_or_category.index', $category->url_path) . '?sort=price-asc');
+
+    // Assert
+    $response->assertOk();
+    $content = $response->getContent();
+    
+    // Product A should appear before Product B when sorted by price ascending
+    $posA = strpos($content, 'Product A');
+    $posB = strpos($content, 'Product B');
+    
+    expect($posA)->toBeLessThan($posB);
+});
+
+
 
 
 
