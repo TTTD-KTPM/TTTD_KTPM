@@ -1,5 +1,6 @@
 <?php
 
+use Webkul\Faker\Helpers\Category as CategoryFaker;
 use Webkul\Faker\Helpers\Product as ProductFaker;
 use Webkul\Product\Models\ProductReview;
 
@@ -74,4 +75,29 @@ it('should display product reviews on detail page', function () {
         ->assertOk()
         ->assertSeeText('Excellent Product')
         ->assertSeeText('This product is amazing!');
+});
+
+it('should allow customers to browse products by category', function () {
+    // Arrange
+    $category = (new CategoryFaker)->factory()->create([
+        'name'   => 'Electronics',
+        'status' => 1,
+    ]);
+
+    $product1 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+    $product2 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    $product1->categories()->attach($category->id);
+    $product2->categories()->attach($category->id);
+
+    // Act and Assert
+    get(route('shop.product_or_category.index', $category->url_path))
+        ->assertOk()
+        ->assertSeeText($category->name);
 });
