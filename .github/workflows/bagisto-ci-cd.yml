@@ -107,6 +107,12 @@ jobs:
     
     - name: 🧪 Running Product Display Tests (Shop)
       run: php artisan test --testsuite=Package --filter=ProductDisplayTest
+    
+    - name: 🧪 Running Category Management Tests
+      run: php artisan test --testsuite=Package --filter=CategoryTest
+    
+    - name: 🧪 Running Product Attribute Tests
+      run: php artisan test --testsuite=Package --filter=AttributeTest
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
