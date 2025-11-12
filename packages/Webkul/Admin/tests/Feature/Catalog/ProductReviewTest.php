@@ -7,6 +7,7 @@ use Webkul\Product\Models\ProductReview;
 use function Pest\Laravel\deleteJson;
 use function Pest\Laravel\get;
 use function Pest\Laravel\getJson;
+use function Pest\Laravel\postJson;
 use function Pest\Laravel\putJson;
 
 it('should show the product reviews list page', function () {
@@ -129,4 +130,42 @@ it('should delete a product review', function () {
     $this->assertDatabaseMissing('product_reviews', [
         'id' => $review->id,
     ]);
+});
+
+it('should mass delete product reviews', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create();
+    $customer = Customer::factory()->create();
+
+    $review1 = ProductReview::create([
+        'title'       => 'Review 1',
+        'rating'      => 5,
+        'comment'     => 'First review',
+        'status'      => 'approved',
+        'product_id'  => $product->id,
+        'customer_id' => $customer->id,
+        'name'        => $customer->name,
+    ]);
+
+    $review2 = ProductReview::create([
+        'title'       => 'Review 2',
+        'rating'      => 4,
+        'comment'     => 'Second review',
+        'status'      => 'pending',
+        'product_id'  => $product->id,
+        'customer_id' => $customer->id,
+        'name'        => $customer->name,
+    ]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    postJson(route('admin.catalog.products.reviews.mass_delete'), [
+        'indices' => [$review1->id, $review2->id],
+    ])
+        ->assertOk()
+        ->assertJsonPath('message', trans('admin::app.catalog.products.reviews.index.datagrid.mass-delete-success'));
+
+    $this->assertDatabaseMissing('product_reviews', ['id' => $review1->id]);
+    $this->assertDatabaseMissing('product_reviews', ['id' => $review2->id]);
 });
