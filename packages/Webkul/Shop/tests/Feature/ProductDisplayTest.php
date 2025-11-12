@@ -101,3 +101,31 @@ it('should allow customers to browse products by category', function () {
         ->assertOk()
         ->assertSeeText($category->name);
 });
+
+it('should display products with pagination', function () {
+    // Arrange - Create 15 products to test pagination
+    $products = [];
+    for ($i = 1; $i <= 15; $i++) {
+        $products[] = (new ProductFaker)->getSimpleProductFactory()->create([
+            'name'                 => "Pagination Test Product {$i}",
+            'status'               => 1,
+            'visible_individually' => 1,
+        ]);
+    }
+
+    // Act
+    $response = get(route('shop.home.index'));
+
+    // Assert
+    $response->assertOk();
+    
+    // Assuming pagination shows 12 products per page
+    // First 12 products should be visible on page 1
+    for ($i = 1; $i <= 12; $i++) {
+        $response->assertSeeText("Pagination Test Product {$i}");
+    }
+    
+    // Products 13-15 should be on page 2
+    $response->assertDontSee("Pagination Test Product 13");
+});
+
