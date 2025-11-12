@@ -132,3 +132,27 @@ it('should sort products by newest first', function () {
     // Assert - newest product should be first
     expect($response['records'][0]['product_id'])->toBe($product2->id);
 });
+
+it('should return relevant search results based on product name and SKU', function () {
+    // Arrange
+    $product1 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'sku'  => 'LAPTOP-001',
+        'name' => 'Dell Laptop',
+    ]);
+    $product2 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'sku'  => 'PHONE-001',
+        'name' => 'Samsung Phone',
+    ]);
+
+    // Act and Assert - Search by name
+    $this->loginAsAdmin();
+
+    getJson(route('admin.catalog.products.search', ['query' => 'Laptop']))
+        ->assertOk()
+        ->assertJsonFragment(['name' => 'Dell Laptop']);
+
+    // Act and Assert - Search by SKU
+    getJson(route('admin.catalog.products.search', ['query' => 'PHONE-001']))
+        ->assertOk()
+        ->assertJsonFragment(['sku' => 'PHONE-001']);
+});
