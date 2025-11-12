@@ -41,3 +41,22 @@ it('should return products filtered by category', function () {
         ->assertOk()
         ->assertJsonPath('records.0.product_id', $product1->id);
 });
+
+it('should filter products by price range', function () {
+    // Arrange
+    $product1 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 100]);
+    $product2 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 500]);
+    $product3 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 1000]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    getJson(route('admin.catalog.products.index', [
+        'price_from' => 200,
+        'price_to'   => 800,
+    ]), [
+        'X-Requested-With' => 'XMLHttpRequest',
+    ])
+        ->assertOk()
+        ->assertJsonFragment(['product_id' => $product2->id]);
+});
