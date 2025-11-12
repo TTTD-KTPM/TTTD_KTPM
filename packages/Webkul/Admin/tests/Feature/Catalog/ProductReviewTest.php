@@ -169,3 +169,42 @@ it('should mass delete product reviews', function () {
     $this->assertDatabaseMissing('product_reviews', ['id' => $review1->id]);
     $this->assertDatabaseMissing('product_reviews', ['id' => $review2->id]);
 });
+
+it('should mass update product review status', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create();
+    $customer = Customer::factory()->create();
+
+    $review1 = ProductReview::create([
+        'title'       => 'Pending Review 1',
+        'rating'      => 5,
+        'comment'     => 'Awaiting approval',
+        'status'      => 'pending',
+        'product_id'  => $product->id,
+        'customer_id' => $customer->id,
+        'name'        => $customer->name,
+    ]);
+
+    $review2 = ProductReview::create([
+        'title'       => 'Pending Review 2',
+        'rating'      => 4,
+        'comment'     => 'Also awaiting',
+        'status'      => 'pending',
+        'product_id'  => $product->id,
+        'customer_id' => $customer->id,
+        'name'        => $customer->name,
+    ]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    postJson(route('admin.catalog.products.reviews.mass_update'), [
+        'indices' => [$review1->id, $review2->id],
+        'value'   => 'approved',
+    ])
+        ->assertOk()
+        ->assertJsonPath('message', trans('admin::app.catalog.products.reviews.index.datagrid.mass-update-success'));
+
+    $this->assertDatabaseHas('product_reviews', ['id' => $review1->id, 'status' => 'approved']);
+    $this->assertDatabaseHas('product_reviews', ['id' => $review2->id, 'status' => 'approved']);
+});
