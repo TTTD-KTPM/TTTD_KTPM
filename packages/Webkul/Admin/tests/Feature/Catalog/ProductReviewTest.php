@@ -72,3 +72,33 @@ it('should approve a product review', function () {
         'status' => 'approved',
     ]);
 });
+
+it('should disapprove a product review', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create();
+    $customer = Customer::factory()->create();
+
+    $review = ProductReview::create([
+        'title'       => 'Approved Review',
+        'rating'      => 3,
+        'comment'     => 'This was approved',
+        'status'      => 'approved',
+        'product_id'  => $product->id,
+        'customer_id' => $customer->id,
+        'name'        => $customer->name,
+    ]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    putJson(route('admin.catalog.products.reviews.update', $review->id), [
+        'status' => 'disapproved',
+    ])
+        ->assertOk()
+        ->assertJsonPath('message', trans('admin::app.catalog.products.reviews.update-success'));
+
+    $this->assertDatabaseHas('product_reviews', [
+        'id'     => $review->id,
+        'status' => 'disapproved',
+    ]);
+});
