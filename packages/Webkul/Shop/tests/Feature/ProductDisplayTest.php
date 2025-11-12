@@ -129,3 +129,25 @@ it('should display products with pagination', function () {
     $response->assertDontSee("Pagination Test Product 13");
 });
 
+it('should handle out of stock products correctly', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Out of Stock Product',
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    // Set inventory to 0
+    $product->inventories()->update(['qty' => 0]);
+
+    // Act
+    $response = get(route('shop.product_or_category.index', $product->url_key));
+
+    // Assert
+    $response->assertOk();
+    $response->assertSeeText('Out of Stock Product');
+    // Out of stock message should be visible
+    expect($response->getContent())->toContain('out-of-stock');
+});
+
+
