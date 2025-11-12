@@ -4,6 +4,7 @@ use Webkul\Customer\Models\Customer;
 use Webkul\Faker\Helpers\Product as ProductFaker;
 use Webkul\Product\Models\ProductReview;
 
+use function Pest\Laravel\deleteJson;
 use function Pest\Laravel\get;
 use function Pest\Laravel\getJson;
 use function Pest\Laravel\putJson;
@@ -100,5 +101,32 @@ it('should disapprove a product review', function () {
     $this->assertDatabaseHas('product_reviews', [
         'id'     => $review->id,
         'status' => 'disapproved',
+    ]);
+});
+
+it('should delete a product review', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create();
+    $customer = Customer::factory()->create();
+
+    $review = ProductReview::create([
+        'title'       => 'Review to Delete',
+        'rating'      => 2,
+        'comment'     => 'Will be deleted',
+        'status'      => 'pending',
+        'product_id'  => $product->id,
+        'customer_id' => $customer->id,
+        'name'        => $customer->name,
+    ]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    deleteJson(route('admin.catalog.products.reviews.delete', $review->id))
+        ->assertOk()
+        ->assertJsonPath('message', trans('admin::app.catalog.products.reviews.delete-success'));
+
+    $this->assertDatabaseMissing('product_reviews', [
+        'id' => $review->id,
     ]);
 });
