@@ -2,9 +2,9 @@ name: Bagisto CI/CD Pipeline
 
 on:
   push:
-    branches: [ Triet-Customer, Toan-Order, Duc-Product-Catalog ]
+    branches: [ Triet-Customer, Toan-Order, Duc-Product-Catalog, Duc-Shopping-Cart ]
   pull_request:
-    branches: [ Triet-Customer, Toan-Order, Duc-Product-Catalog ]
+    branches: [ Triet-Customer, Toan-Order, Duc-Product-Catalog, Duc-Shopping-Cart ]
 
 jobs:
   test:
@@ -113,6 +113,10 @@ jobs:
     
     - name: 🧪 Running Product Attribute Tests
       run: php artisan test --testsuite=Package --filter=AttributeTest
+    
+    # Shopping Cart Tests
+    - name: 🧪 Running Shopping Cart Tests
+      run: php artisan test --testsuite=Package --filter=CartTest
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
