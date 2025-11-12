@@ -177,5 +177,39 @@ it('should display related products section', function () {
     expect($response->getContent())->toContain('Related Product');
 });
 
+it('should filter products by price in category', function () {
+    // Arrange
+    $category = (new CategoryFaker)->factory()->create([
+        'name'   => 'Electronics',
+        'status' => 1,
+    ]);
+
+    $cheapProduct = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Cheap Product',
+        'price'                => 50,
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    $expensiveProduct = (new ProductFaker)->getSimpleProductFactory()->create([
+        'name'                 => 'Expensive Product',
+        'price'                => 500,
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    $cheapProduct->categories()->attach($category->id);
+    $expensiveProduct->categories()->attach($category->id);
+
+    // Act - Filter products with price <= 100
+    $response = get(route('shop.product_or_category.index', $category->url_path) . '?price=0,100');
+
+    // Assert
+    $response->assertOk();
+    $response->assertSeeText('Cheap Product');
+    $response->assertDontSee('Expensive Product');
+});
+
+
 
 
