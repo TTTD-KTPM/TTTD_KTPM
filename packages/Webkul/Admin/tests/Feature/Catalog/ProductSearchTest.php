@@ -104,3 +104,31 @@ it('should sort products by price descending', function () {
     // Assert - first product should have highest price
     expect($response['records'][0]['product_id'])->toBe($product1->id);
 });
+
+it('should sort products by newest first', function () {
+    // Arrange
+    $product1 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'created_at' => now()->subDays(5),
+    ]);
+    $product2 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'created_at' => now()->subDays(1),
+    ]);
+    $product3 = (new ProductFaker)->getSimpleProductFactory()->create([
+        'created_at' => now()->subDays(3),
+    ]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    $response = getJson(route('admin.catalog.products.index', [
+        'sort'  => 'created_at',
+        'order' => 'desc',
+    ]), [
+        'X-Requested-With' => 'XMLHttpRequest',
+    ])
+        ->assertOk()
+        ->json();
+
+    // Assert - newest product should be first
+    expect($response['records'][0]['product_id'])->toBe($product2->id);
+});
