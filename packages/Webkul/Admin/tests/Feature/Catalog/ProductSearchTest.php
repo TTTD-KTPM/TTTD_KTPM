@@ -60,3 +60,25 @@ it('should filter products by price range', function () {
         ->assertOk()
         ->assertJsonFragment(['product_id' => $product2->id]);
 });
+
+it('should sort products by price ascending', function () {
+    // Arrange
+    $product1 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 500]);
+    $product2 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 100]);
+    $product3 = (new ProductFaker)->getSimpleProductFactory()->create(['price' => 300]);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    $response = getJson(route('admin.catalog.products.index', [
+        'sort'  => 'price',
+        'order' => 'asc',
+    ]), [
+        'X-Requested-With' => 'XMLHttpRequest',
+    ])
+        ->assertOk()
+        ->json();
+
+    // Assert - first product should have lowest price
+    expect($response['records'][0]['product_id'])->toBe($product2->id);
+});
