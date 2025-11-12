@@ -36,3 +36,18 @@ it('should display product information correctly', function () {
         ->assertSeeText('199.99')
         ->assertSeeText('Detailed product description');
 });
+
+it('should display product image gallery', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create([
+        'status'               => 1,
+        'visible_individually' => 1,
+    ]);
+
+    // Act and Assert
+    $response = get(route('shop.product_or_category.index', $product->url_key))
+        ->assertOk();
+
+    // Check if image container exists (structure may vary)
+    expect($response->getContent())->toContain('product-image');
+});
