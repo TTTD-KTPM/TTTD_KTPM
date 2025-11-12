@@ -195,3 +195,15 @@ it('should apply multiple filters correctly', function () {
     expect($response['records'])->toHaveCount(1);
     expect($response['records'][0]['product_id'])->toBe($product1->id);
 });
+
+it('should handle search with no results gracefully', function () {
+    // Arrange
+    $product = (new ProductFaker)->getSimpleProductFactory()->create(['name' => 'Existing Product']);
+
+    // Act and Assert
+    $this->loginAsAdmin();
+
+    getJson(route('admin.catalog.products.search', ['query' => 'NonExistentProduct']))
+        ->assertOk()
+        ->assertJsonCount(0, 'data');
+});
