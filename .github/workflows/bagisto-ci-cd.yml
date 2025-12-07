@@ -2,9 +2,9 @@ name: Bagisto CI/CD Pipeline
 
 on:
   push:
-    branches: [ Triet-Customer ]
+    branches: [ Triet-Customer, Toan-Order, Duc-Product-Catalog, Duc-Shopping-Cart, Tinh-Payment_Inventory]
   pull_request:
-    branches: [ Triet-Customer ]
+    branches: [ Triet-Customer, Toan-Order, Duc-Product-Catalog, Duc-Shopping-Cart, Tinh-Payment_Inventory] 
 
 jobs:
   test:
