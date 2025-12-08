@@ -87,7 +87,7 @@ jobs:
       
   
     # === ORDER MODULE TESTS ===
-    # Phase 2: Adding Shop Order Tests
+    # Phase 3: Adding Invoice Tests
     
     - name: 🧪 Running Checkout Tests
       run: php artisan test --testsuite=Package --filter=CheckoutTest
@@ -95,10 +95,10 @@ jobs:
     - name: 🧪 Running Shop Order Tests
       run: php artisan test --testsuite=Package --filter=OrdersTest
     
-    # TODO: Add more tests in next commits
-    # - name: 🧪 Running Invoice Tests
-    #   run: php artisan test --testsuite=Package --filter=InvoiceTest
+    - name: 🧪 Running Invoice Tests
+      run: php artisan test --testsuite=Package --filter=InvoiceTest
     
+    # TODO: Add more tests in next commits
     # - name: 🧪 Running Shipment Tests
     #   run: php artisan test --testsuite=Package --filter=ShipmentTest
     
