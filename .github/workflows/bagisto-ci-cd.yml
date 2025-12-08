@@ -100,7 +100,7 @@ jobs:
           run: php artisan test --testsuite=Package --filter=InvoiceTest
     
     # - name: 🧪 Running Shipment Tests
-    #   run: php artisan test --testsuite=Package --filter=ShipmentTest
+          run: php artisan test --testsuite=Package --filter=ShipmentTest
     
     # - name: 🧪 Running Refund Tests
     #   run: php artisan test --testsuite=Package --filter=RefundTest
