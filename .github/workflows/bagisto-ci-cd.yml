@@ -86,12 +86,54 @@ jobs:
         php artisan optimize
       
   
-    - name: 🧪 Running Shop Order Tests with Pest
-      run: php artisan test --testsuite=Package --filter=OrdersTest
+    # === ORDER MODULE TESTS ===
+    # Phase 1: Adding tests incrementally
+    
+    - name: 🧪 Running Checkout Tests
+      run: php artisan test --testsuite=Package --filter=CheckoutTest
+    
+    # TODO: Add more tests in next commits
+    # - name: 🧪 Running Shop Order Tests with Pest
+    #   run: php artisan test --testsuite=Package --filter=OrdersTest
+    
+    # - name: 🧪 Running Invoice Tests
+    #   run: php artisan test --testsuite=Package --filter=InvoiceTest
+    
+    # - name: 🧪 Running Shipment Tests
+    #   run: php artisan test --testsuite=Package --filter=ShipmentTest
+    
+    # - name: 🧪 Running Refund Tests
+    #   run: php artisan test --testsuite=Package --filter=RefundTest
     
     # Temporarily disabled due to CSRF issues - will be fixed separately
     # - name: 🧪 Running Admin Order Tests with Pest
     #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Sales/OrdersTest.php --colors=always
+    
+    # === PRODUCT CATALOG TESTS ===
+    - name: 🧪 Running Product Catalog Inventory Tests
+      run: php artisan test --testsuite=Package --filter=InventoryTest
+    
+    - name: 🧪 Running Product Catalog Review Tests
+      run: php artisan test --testsuite=Package --filter=ProductReviewTest
+    
+    - name: 🧪 Running Product Catalog Search Tests
+      run: php artisan test --testsuite=Package --filter=ProductSearchTest
+    
+    - name: 🧪 Running Product Catalog Product Tests
+      run: php artisan test --testsuite=Package --filter=ProductTest
+    
+    - name: 🧪 Running Product Display Tests (Shop)
+      run: php artisan test --testsuite=Package --filter=ProductDisplayTest
+    
+    - name: 🧪 Running Category Management Tests
+      run: php artisan test --testsuite=Package --filter=CategoryTest
+    
+    - name: 🧪 Running Product Attribute Tests
+      run: php artisan test --testsuite=Package --filter=AttributeTest
+    
+    # Shopping Cart Tests
+    - name: 🧪 Running Shopping Cart Tests
+      run: php artisan test --testsuite=Package --filter=CartTest
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
