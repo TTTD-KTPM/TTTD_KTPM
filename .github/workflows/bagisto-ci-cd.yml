@@ -87,23 +87,23 @@ jobs:
       
   
     # === ORDER MODULE TESTS ===
-    # Phase 1: Adding tests incrementally
+    # Phase 2: Adding Shop Order Tests
     
     - name: 🧪 Running Checkout Tests
       run: php artisan test --testsuite=Package --filter=CheckoutTest
     
-    # TODO: Add more tests in next commits
-    # - name: 🧪 Running Shop Order Tests with Pest
-          run: php artisan test --testsuite=Package --filter=OrdersTest
+    - name: 🧪 Running Shop Order Tests
+      run: php artisan test --testsuite=Package --filter=OrdersTest
     
+    # TODO: Add more tests in next commits
     # - name: 🧪 Running Invoice Tests
-          run: php artisan test --testsuite=Package --filter=InvoiceTest
+    #   run: php artisan test --testsuite=Package --filter=InvoiceTest
     
     # - name: 🧪 Running Shipment Tests
-          run: php artisan test --testsuite=Package --filter=ShipmentTest
+    #   run: php artisan test --testsuite=Package --filter=ShipmentTest
     
     # - name: 🧪 Running Refund Tests
-          run: php artisan test --testsuite=Package --filter=RefundTest
+    #   run: php artisan test --testsuite=Package --filter=RefundTest
     
     # Temporarily disabled due to CSRF issues - will be fixed separately
     # - name: 🧪 Running Admin Order Tests with Pest
