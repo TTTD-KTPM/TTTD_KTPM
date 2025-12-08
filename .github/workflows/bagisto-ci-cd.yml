@@ -94,7 +94,7 @@ jobs:
     
     # TODO: Add more tests in next commits
     # - name: 🧪 Running Shop Order Tests with Pest
-    #   run: php artisan test --testsuite=Package --filter=OrdersTest
+          run: php artisan test --testsuite=Package --filter=OrdersTest
     
     # - name: 🧪 Running Invoice Tests
     #   run: php artisan test --testsuite=Package --filter=InvoiceTest
