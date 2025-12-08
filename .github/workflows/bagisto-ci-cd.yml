@@ -87,7 +87,7 @@ jobs:
       
   
     # === ORDER MODULE TESTS ===
-    # Phase 4: Adding Shipment Tests
+    # Phase 5: Order Module Testing Complete ✅
     
     - name: 🧪 Running Checkout Tests
       run: php artisan test --testsuite=Package --filter=CheckoutTest
@@ -101,9 +101,8 @@ jobs:
     - name: 🧪 Running Shipment Tests
       run: php artisan test --testsuite=Package --filter=ShipmentTest
     
-    # TODO: Add more tests in next commits
-    # - name: 🧪 Running Refund Tests
-    #   run: php artisan test --testsuite=Package --filter=RefundTest
+    - name: 🧪 Running Refund Tests
+      run: php artisan test --testsuite=Package --filter=RefundTest
     
     # Temporarily disabled due to CSRF issues - will be fixed separately
     # - name: 🧪 Running Admin Order Tests with Pest
