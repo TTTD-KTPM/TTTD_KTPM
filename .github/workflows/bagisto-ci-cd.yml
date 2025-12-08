@@ -103,7 +103,7 @@ jobs:
           run: php artisan test --testsuite=Package --filter=ShipmentTest
     
     # - name: 🧪 Running Refund Tests
-    #   run: php artisan test --testsuite=Package --filter=RefundTest
+          run: php artisan test --testsuite=Package --filter=RefundTest
     
     # Temporarily disabled due to CSRF issues - will be fixed separately
     # - name: 🧪 Running Admin Order Tests with Pest
