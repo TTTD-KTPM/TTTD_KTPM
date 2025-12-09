@@ -16,6 +16,8 @@ class CMSPagesTableSeeder extends Seeder
      */
     public function run($parameters = [])
     {
+        DB::table('cms_page_channels')->delete();
+
         DB::table('cms_pages')->delete();
 
         DB::table('cms_page_translations')->delete();
