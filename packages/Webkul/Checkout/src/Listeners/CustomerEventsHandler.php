@@ -7,17 +7,16 @@ use Webkul\Checkout\Facades\Cart;
 class CustomerEventsHandler
 {
     /**
-     * Handle Customer login events.
+     * Handle Customer login events - DISABLED for Triet-Customer branch.
+     * Cart merge functionality is disabled.
      */
     public function onCustomerLogin($customer)
     {
         /**
-         * handle the user login event to manage the after login, if the user has added any products as guest then
-         * the cart items from session will be transferred from cookie to the cart table in the database.
-         *
-         * Check whether cookie is present or not and then check emptiness and then do the appropriate actions.
+         * Cart merge is disabled for Triet-Customer branch.
+         * This branch does not support shopping cart functionality.
          */
-        Cart::mergeCart($customer);
+        // Cart::mergeCart($customer);
     }
 
     /**

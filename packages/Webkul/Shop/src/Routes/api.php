@@ -57,37 +57,28 @@ Route::group(['prefix' => 'api'], function () {
         Route::delete('all', 'destroyAll')->name('shop.api.compare.destroy_all');
     });
 
+    /**
+     * Cart and Checkout API routes - LIMITED for Triet-Customer branch
+     * Routes exist but return disabled messages
+     */
     Route::controller(CartController::class)->prefix('checkout/cart')->group(function () {
         Route::get('', 'index')->name('shop.api.checkout.cart.index');
-
         Route::post('', 'store')->name('shop.api.checkout.cart.store');
-
         Route::put('', 'update')->name('shop.api.checkout.cart.update');
-
         Route::delete('', 'destroy')->name('shop.api.checkout.cart.destroy');
-
         Route::delete('selected', 'destroySelected')->name('shop.api.checkout.cart.destroy_selected');
-
         Route::post('move-to-wishlist', 'moveToWishlist')->name('shop.api.checkout.cart.move_to_wishlist');
-
         Route::post('coupon', 'storeCoupon')->name('shop.api.checkout.cart.coupon.apply');
-
         Route::post('estimate-shipping-methods', 'estimateShippingMethods')->name('shop.api.checkout.cart.estimate_shipping');
-
         Route::delete('coupon', 'destroyCoupon')->name('shop.api.checkout.cart.coupon.remove');
-
         Route::get('cross-sell', 'crossSellProducts')->name('shop.api.checkout.cart.cross-sell.index');
     });
 
     Route::controller(OnepageController::class)->prefix('checkout/onepage')->group(function () {
         Route::get('summary', 'summary')->name('shop.checkout.onepage.summary');
-
         Route::post('addresses', 'storeAddress')->name('shop.checkout.onepage.addresses.store');
-
         Route::post('shipping-methods', 'storeShippingMethod')->name('shop.checkout.onepage.shipping_methods.store');
-
         Route::post('payment-methods', 'storePaymentMethod')->name('shop.checkout.onepage.payment_methods.store');
-
         Route::post('orders', 'storeOrder')->name('shop.checkout.onepage.orders.store');
     });
 

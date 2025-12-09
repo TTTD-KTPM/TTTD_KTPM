@@ -414,24 +414,7 @@
                             <td style="width: 50%">
                                 {{ core()->getConfigData('sales.payment_methods.' . $invoice->order->payment->method . '.title') }}
 
-                                @php 
-                                    $additionalDetails = [];
-                                    // TODO: Uncomment when Payment module is available
-                                    // try {
-                                    //     $additionalDetails = \Webkul\Payment\Payment::getAdditionalDetails($invoice->order->payment->method);
-                                    // } catch (\Exception $e) {
-                                    //     // Silently handle cases where payment method class is not available
-                                    // }
-                                    
-                                    // For now, skip additional details when Payment module is not active
-                                    if (class_exists('\Webkul\Payment\Payment') && config('payment_methods')) {
-                                        try {
-                                            $additionalDetails = \Webkul\Payment\Payment::getAdditionalDetails($invoice->order->payment->method);
-                                        } catch (\Exception $e) {
-                                            // Payment service not available, continue without additional details
-                                        }
-                                    }
-                                @endphp
+                                @php $additionalDetails = \Webkul\Payment\Payment::getAdditionalDetails($invoice->order->payment->method); @endphp
 
                                 @if (! empty($additionalDetails))
                                     <div class="row small-text">

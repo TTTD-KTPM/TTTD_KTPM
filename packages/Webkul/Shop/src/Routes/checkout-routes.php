@@ -5,7 +5,8 @@ use Webkul\Shop\Http\Controllers\CartController;
 use Webkul\Shop\Http\Controllers\OnepageController;
 
 /**
- * Cart routes.
+ * Cart routes - LIMITED for Triet-Customer branch
+ * Returns error messages as cart/checkout functionality is disabled
  */
 Route::controller(CartController::class)->prefix('checkout/cart')->group(function () {
     Route::get('', 'index')->name('shop.checkout.cart.index');

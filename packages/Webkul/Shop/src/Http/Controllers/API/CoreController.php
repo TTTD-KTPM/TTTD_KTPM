@@ -2,40 +2,33 @@
 
 namespace Webkul\Shop\Http\Controllers\API;
 
-use Webkul\Core\Repositories\CountryRepository;
-use Webkul\Core\Repositories\CountryStateRepository;
-
 class CoreController extends APIController
 {
     /**
-     * Create a new controller instance.
-     */
-    public function __construct(
-        protected CountryRepository $countryRepository,
-        protected CountryStateRepository $countryStateRepository
-    ) {}
-
-    /**
      * Get countries.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getCountries()
     {
-        $countries = $this->countryRepository->all();
-
         return response()->json([
-            'data' => $countries,
+            'data' => core()->countries()->map(fn ($country) => [
+                'id'   => $country->id,
+                'code' => $country->code,
+                'name' => $country->name,
+            ]),
         ]);
     }
 
     /**
-     * Get states grouped by country code.
+     * Get states.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getStates()
     {
-        $states = $this->countryStateRepository->all()->groupBy('country_code');
-
         return response()->json([
-            'data' => $states,
+            'data' => core()->groupedStatesByCountries(),
         ]);
     }
 }
