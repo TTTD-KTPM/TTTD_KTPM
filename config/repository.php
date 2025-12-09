@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Prettus Repository Config
@@ -16,7 +15,7 @@ return [
     |
     */
     'pagination' => [
-        'limit' => 15,
+        'limit' => 15
     ],
 
     /*
@@ -33,9 +32,9 @@ return [
     */
     'fractal'    => [
         'params'     => [
-            'include' => 'include',
+            'include' => 'include'
         ],
-        'serializer' => League\Fractal\Serializer\DataArraySerializer::class,
+        'serializer' => League\Fractal\Serializer\DataArraySerializer::class
     ],
 
     /*
@@ -63,7 +62,7 @@ return [
          | Time of expiration cache
          |
          */
-        'minutes'    => 10080,
+        'minutes'    => 30,
 
         /*
          |--------------------------------------------------------------------------
@@ -104,10 +103,10 @@ return [
               |
               */
             'on'      => [
-                'created' => true,
-                'updated' => true,
-                'deleted' => true,
-            ],
+                'create' => true,
+                'update' => true,
+                'delete' => true,
+            ]
         ],
 
         'params'     => [
@@ -120,7 +119,7 @@ return [
             | Ex: http://prettus.local/?search=lorem&skipCache=true
             |
             */
-            'skipCache' => 'skipCache',
+            'skipCache' => 'skipCache'
         ],
 
         /*
@@ -140,52 +139,8 @@ return [
        */
         'allowed'    => [
             'only'   => null,
-            'except' => null,
-        ],
-
-        'repositories' => [
-            'Webkul\Core\Repositories\CoreConfigRepository' => [
-                'enabled' => true,
-
-                // 'minutes'    => 10080,
-
-                // 'clean'      => [
-                //     'enabled' => true,
-
-                //     'on'      => [
-                //         'created' => true,
-                //         'updated' => true,
-                //         'deleted' => true,
-                //     ]
-                // ],
-
-                // 'allowed' => [
-                //     'only' => null,
-
-                //     'except' => null
-                // ],
-            ],
-
-            'Webkul\Core\Repositories\ChannelRepository' => [
-                'enabled' => true,
-            ],
-
-            'Webkul\Core\Repositories\CountryRepository' => [
-                'enabled' => true,
-            ],
-
-            'Webkul\Core\Repositories\CountryStateRepository' => [
-                'enabled' => true,
-            ],
-
-            'Webkul\Core\Repositories\CurrencyRepository' => [
-                'enabled' => true,
-            ],
-
-            'Webkul\Core\Repositories\LocaleRepository' => [
-                'enabled' => true,
-            ],
-        ],
+            'except' => null
+        ]
     ],
 
     /*
@@ -215,7 +170,7 @@ return [
         'acceptedConditions' => [
             '=',
             'like',
-            'in',
+            'in'
         ],
         /*
         |--------------------------------------------------------------------------
@@ -263,8 +218,8 @@ return [
             'sortedBy'     => 'sortedBy',
             'with'         => 'with',
             'searchJoin'   => 'searchJoin',
-            'withCount'    => 'withCount',
-        ],
+            'withCount'    => 'withCount'
+        ]
     ],
     /*
     |--------------------------------------------------------------------------
@@ -273,10 +228,10 @@ return [
     |
     */
     'generator'  => [
-        'basePath'          => app()->path(),
-        'rootNamespace'     => 'App\\',
+        'basePath'      => app()->path(),
+        'rootNamespace' => 'App\\',
         'stubsOverridePath' => app()->path(),
-        'paths'             => [
+        'paths'         => [
             'models'       => 'Entities',
             'repositories' => 'Repositories',
             'interfaces'   => 'Repositories',
@@ -285,7 +240,7 @@ return [
             'validators'   => 'Validators',
             'controllers'  => 'Http/Controllers',
             'provider'     => 'RepositoryServiceProvider',
-            'criteria'     => 'Criteria',
-        ],
-    ],
+            'criteria'     => 'Criteria'
+        ]
+    ]
 ];
