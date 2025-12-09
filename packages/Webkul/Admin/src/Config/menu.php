@@ -77,35 +77,6 @@ return [
     ],
 
     /**
-     * Customers.
-     */
-    [
-        'key'        => 'customers',
-        'name'       => 'admin::app.components.layouts.sidebar.customers',
-        'route'      => 'admin.customers.customers.index',
-        'sort'       => 4,
-        'icon'       => 'icon-customer-2',
-    ], [
-        'key'        => 'customers.customers',
-        'name'       => 'admin::app.components.layouts.sidebar.customers',
-        'route'      => 'admin.customers.customers.index',
-        'sort'       => 1,
-        'icon'       => '',
-    ], [
-        'key'        => 'customers.groups',
-        'name'       => 'admin::app.components.layouts.sidebar.groups',
-        'route'      => 'admin.customers.groups.index',
-        'sort'       => 2,
-        'icon'       => '',
-    ], [
-        'key'        => 'customers.reviews',
-        'name'       => 'admin::app.components.layouts.sidebar.reviews',
-        'route'      => 'admin.customers.customers.review.index',
-        'sort'       => 3,
-        'icon'       => '',
-    ],
-
-    /**
      * Marketing.
      */
     [
