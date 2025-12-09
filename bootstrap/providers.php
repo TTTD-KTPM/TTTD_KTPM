@@ -44,18 +44,18 @@ return [
     Webkul\CartRule\Providers\CartRuleServiceProvider::class,   // Shopping cart promotions (depends on Rule, Customer)
     Webkul\CatalogRule\Providers\CatalogRuleServiceProvider::class, // Product catalog promotions (depends on Rule, Product)
     
-    // Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
-    // Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
+    Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
+    Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
     // Webkul\Notification\Providers\NotificationServiceProvider::class,
     Webkul\Paypal\Providers\PaypalServiceProvider::class,
     Webkul\Shipping\Providers\ShippingServiceProvider::class,
-    // Webkul\Sitemap\Providers\SitemapServiceProvider::class,
+    Webkul\Sitemap\Providers\SitemapServiceProvider::class,
     // Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
     // Webkul\SocialShare\Providers\SocialShareServiceProvider::class,
     
     // 🔍 DEVELOPMENT TOOLS:
     // Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
-    // Webkul\FPC\Providers\FPCServiceProvider::class,
+    Webkul\FPC\Providers\FPCServiceProvider::class,
     // Webkul\GDPR\Providers\GDPRServiceProvider::class,
     Webkul\Installer\Providers\InstallerServiceProvider::class,
     // Webkul\MagicAI\Providers\MagicAIServiceProvider::class,

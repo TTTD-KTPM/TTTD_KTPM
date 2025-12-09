@@ -22,27 +22,11 @@ class CreatedNotification extends Mailable
      */
     public function envelope(): Envelope
     {
-        // ORIGINAL CODE (commented out due to null email issue in CI):
-        // return new Envelope(
-        //     to: [
-        //         new Address(
-        //             core()->getAdminEmailDetails()['email'],
-        //             core()->getAdminEmailDetails()['name']
-        //         ),
-        //     ],
-        //     subject: trans('admin::app.emails.orders.created.subject'),
-        // );
-
-        // SAFE VERSION (handles null admin email in test environment):
-        $adminDetails = core()->getAdminEmailDetails();
-        $adminEmail = $adminDetails['email'] ?? config('mail.from.address', 'admin@example.com');
-        $adminName = $adminDetails['name'] ?? config('mail.from.name', 'Admin');
-
         return new Envelope(
             to: [
                 new Address(
-                    $adminEmail,
-                    $adminName
+                    core()->getAdminEmailDetails()['email'],
+                    core()->getAdminEmailDetails()['name']
                 ),
             ],
             subject: trans('admin::app.emails.orders.created.subject'),

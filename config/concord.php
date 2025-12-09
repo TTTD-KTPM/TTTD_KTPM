@@ -46,12 +46,12 @@ return [
         \Webkul\CartRule\Providers\ModuleServiceProvider::class,  // Shopping cart promotions (depends on Rule, Customer)
         \Webkul\CatalogRule\Providers\ModuleServiceProvider::class, // Product catalog promotions (depends on Rule, Product)
         
-        // \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,
-        // \Webkul\DataTransfer\Providers\ModuleServiceProvider::class,
+        \Webkul\BookingProduct\Providers\ModuleServiceProvider::class,
+        \Webkul\DataTransfer\Providers\ModuleServiceProvider::class,
         // \Webkul\Notification\Providers\ModuleServiceProvider::class,
         \Webkul\Paypal\Providers\ModuleServiceProvider::class,
         // \Webkul\Rule\Providers\ModuleServiceProvider::class,
-        // \Webkul\Sitemap\Providers\ModuleServiceProvider::class,
+        \Webkul\Sitemap\Providers\ModuleServiceProvider::class,
         // \Webkul\SocialLogin\Providers\ModuleServiceProvider::class,
     ],
 
