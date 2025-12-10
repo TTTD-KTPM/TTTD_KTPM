@@ -24,11 +24,27 @@ class InvoicedNotification extends Mailable
     {
         $order = $this->invoice->order;
 
+        // ORIGINAL CODE (commented out due to null email issue in CI):
+        // return new Envelope(
+        //     to: [
+        //         new Address(
+        //             core()->getAdminEmailDetails()['email'],
+        //             core()->getAdminEmailDetails()['name']
+        //         ),
+        //     ],
+        //     subject: trans('admin::app.emails.orders.invoiced.subject'),
+        // );
+
+        // SAFE VERSION (handles null admin email in test environment):
+        $adminDetails = core()->getAdminEmailDetails();
+        $adminEmail = $adminDetails['email'] ?? config('mail.from.address', 'admin@example.com');
+        $adminName = $adminDetails['name'] ?? config('mail.from.name', 'Admin');
+
         return new Envelope(
             to: [
                 new Address(
-                    core()->getAdminEmailDetails()['email'],
-                    core()->getAdminEmailDetails()['name']
+                    $adminEmail,
+                    $adminName
                 ),
             ],
             subject: trans('admin::app.emails.orders.invoiced.subject'),

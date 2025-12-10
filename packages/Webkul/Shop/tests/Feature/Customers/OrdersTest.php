@@ -512,6 +512,7 @@ it('should print the order invoice', function () {
 
     getJson(route('shop.customers.account.orders.print-invoice', $invoice->id))
         ->assertDownload('invoice-'.$invoice->created_at->format('d-m-Y').'.pdf');
+    
 
     $cart->refresh();
 

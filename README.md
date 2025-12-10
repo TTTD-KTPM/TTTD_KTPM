@@ -1,46 +1,58 @@
-# 👟 Website Bán Giày - Bagisto E-commerce Platform
+# 👟 BAGISTO E-COMMERCE - PAYMENT & INVENTORY FOCUS
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/bagisto/temp-media/master/bagisto-featured.png" alt="Bagisto Banner" width="100%">
 </p>
 
 <p align="center">
-    <a href="https://github.com/ToanTranDuc/TTTD_KTPM"><img src="https://img.shields.io/badge/version-2.3--optimized-blue.svg" alt="Version"></a>
-    <a href="https://github.com/ToanTranDuc/TTTD_KTPM"><img src="https://img.shields.io/badge/modules-24%2F28-success.svg" alt="Modules"></a>
-    <a href="https://github.com/ToanTranDuc/TTTD_KTPM"><img src="https://img.shields.io/badge/laravel-11.x-red.svg" alt="Laravel"></a>
-    <a href="https://github.com/ToanTranDuc/TTTD_KTPM"><img src="https://img.shields.io/badge/php-8.2%2B-purple.svg" alt="PHP"></a>
+    <a href="https://github.com/TTTD-KTPM/TTTD_KTPM"><img src="https://img.shields.io/badge/version-2.0--payment--inventory-blue.svg" alt="Version"></a>
+    <a href="https://github.com/TTTD-KTPM/TTTD_KTPM"><img src="https://img.shields.io/badge/branch-Tinh--Payment--Inventory-success.svg" alt="Branch"></a>
+    <a href="https://github.com/TTTD-KTPM/TTTD_KTPM"><img src="https://img.shields.io/badge/laravel-11.x-red.svg" alt="Laravel"></a>
+    <a href="https://github.com/TTTD-KTPM/TTTD_KTPM"><img src="https://img.shields.io/badge/php-8.2%2B-purple.svg" alt="PHP"></a>
 </p>
 
 ---
 
-## 📋 Mục lục
+## 📋 MỤC LỤC
 
 - [Giới thiệu dự án](#-giới-thiệu-dự-án)
-- [Tính năng nổi bật](#-tính-năng-nổi-bật)
-- [Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)
-- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
 - [Hướng dẫn cài đặt](#-hướng-dẫn-cài-đặt)
-- [Ví dụ minh họa](#-ví-dụ-minh-họa)
-- [API Documentation](#-api-documentation)
-- [Modules đã tối ưu](#-modules-đã-tối-ưu)
-- [Đóng góp](#-đóng-góp)
-- [Giấy phép](#-giấy-phép)
-- [Liên hệ](#-liên-hệ)
+- [Chức năng chính](#-chức-năng-chính)
+- [Tài liệu](#-tài-liệu)
+- [Test Use Cases](#-test-use-cases)
+- [Tài khoản mặc định](#-tài-khoản-mặc-định)
+- [Troubleshooting](#-troubleshooting)
 
 ---
 
-## 🎯 Giới thiệu dự án
+## 🎯 GIỚI THIỆU DỰ ÁN
 
-**Website Bán Giày** là một dự án mã nguồn mở xây dựng nền tảng thương mại điện tử chuyên về bán giày trực tuyến. Dự án được phát triển dựa trên **Bagisto** – một framework eCommerce mạnh mẽ trên nền **Laravel** – nhưng đã được **tinh gọn và tối ưu hóa** để phù hợp với phạm vi bài toán đồ án.
+> **Branch:** `Tinh-Payment_Inventory`  
+> **Focus:** Payment Process & Inventory Management
 
-### 🎓 Mục tiêu dự án
+Đây là phiên bản **tối giản** của Bagisto E-commerce, tập trung vào **2 chức năng chính**:
 
-Dự án hướng tới việc cung cấp:
+1. **💰 Payment Process (Quy trình thanh toán)**
+   - Multiple payment methods (COD, Bank Transfer, PayPal, Stripe)
+   - Order, Invoice, Refund management
+   - Payment status tracking
 
-- ✅ **Trải nghiệm mua sắm chuyên nghiệp**: Website thời trang, thân thiện với người dùng
-- ✅ **Quản lý dễ dàng**: Hệ thống quản trị tập trung, tự động hóa nhiều quy trình
-- ✅ **Nền tảng vững chắc**: Xây dựng trên Laravel 11.x, sử dụng các công nghệ hiện đại
-- ✅ **Tối ưu hóa hiệu năng**: Loại bỏ các module không cần thiết
+2. **📦 Inventory Management (Quản lý tồn kho)**
+   - Multi-warehouse support
+   - Stock tracking & alerts
+   - Auto stock deduction/restoration
+
+### ✨ Điểm khác biệt
+
+Admin menu đã được **rút gọn**, loại bỏ các module không cần thiết:
+- ❌ Sales: Transactions, Bookings
+- ❌ Catalog: Attribute Families
+- ❌ **Customers: Toàn bộ module (không cần quản lý khách hàng)**
+- ❌ CMS (toàn bộ module)
+- ❌ Marketing: Communications, Search & SEO
+- ❌ Settings: Locales, Currencies, Themes, Taxes, Data Transfer
+
+**Lý do:** Để test Payment chỉ cần: Sản phẩm → Giỏ hàng → Checkout → Thanh toán
 
 ### ⚠️ Lưu ý quan trọng
 
