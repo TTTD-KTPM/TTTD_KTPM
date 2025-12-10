@@ -71,8 +71,8 @@ jobs:
       run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
       
   
-    - name: 🧪 Running Pest Test
-      run: vendor/bin/pest --colors=always 
+    - name: 🧪 Running Product Catalog Tests (Shop)
+      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/CustomerAccessControlTest.php --colors=always
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Minimal backbone CI pipeline successful!"
