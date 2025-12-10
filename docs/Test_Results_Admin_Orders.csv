@@ -1,0 +1,21 @@
+ID,Test Case Description,Test Case Procedure,Expected Output,Inter-test case Dependence,Result,Test date,Note
+TC_01,Xem danh sách đơn,"1. Login Admin (admin@example.com / admin123); 2. Navigate to Sales → Orders; 3. Verify list loads",Display all orders in list view,None,Pass,10/12/2025,Found 3 orders (Order #1 #4 #5)
+TC_02,Lọc ngày invalid (Negative),"1. Go to Sales → Orders; 2. Set From Date = 2025-12-31; 3. Set To Date = 2025-01-01; 4. Click Filter",Error message or empty results,None,Pass,10/12/2025,Validation works - returned 0 orders
+TC_03,Xem chi tiết đơn,"1. Go to Sales → Orders; 2. Click on Order #1; 3. Verify all details display","Show customer name email status total items",None,Pass,10/12/2025,All details shown correctly
+TC_04,Invoice sai điều kiện (Negative),"1. Open Order #1 (Status: Pending); 2. Try to create Invoice; 3. Check error message",Error: Cannot invoice unpaid order,None,Pass,10/12/2025,COD pending validation OK
+TC_05,Invoice thành công,"1. Open Order #5 (Status: Processing); 2. Click Invoice button; 3. Enter item quantities; 4. Click Save",Invoice created successfully,None,Pass,10/12/2025,Invoice #3 created Total: $65
+TC_06,Shipment vượt tồn kho (Negative),"1. Check current product stock; 2. Create shipment with qty > stock; 3. Click Save",Error: Insufficient stock,TC_05,Untested,10/12/2025,Manual test required in admin
+TC_07,Shipment thành công,"1. Open Order #5 with Invoice; 2. Click Ship button; 3. Enter tracking number; 4. Select carrier; 5. Click Save","Shipment created status updated",TC_05,Pass,10/12/2025,Shipment #1 created successfully
+TC_08,Refund quá số tiền (Negative),"1. Open completed order; 2. Click Refund; 3. Enter amount > order total; 4. Click Save",Error: Refund exceeds order total,None,Pass,10/12/2025,Validation works correctly
+TC_09,Cancel đơn đã shipped (Negative),"1. Open Order #5 (has Shipment); 2. Click Cancel button; 3. Check if action is prevented",Error: Cannot cancel shipped order OR button disabled,TC_07,Fail,10/12/2025,BUG: System allows cancel after shipment
+TC_10,Gửi email fail (Negative),"1. Configure invalid SMTP in .env; 2. Create new Invoice; 3. Check error handling",Email fails but Invoice still created,TC_05,Untested,10/12/2025,Manual test with SMTP config needed
+TC_11,Tìm kiếm đơn hàng theo order ID,"1. Go to Sales → Orders; 2. Enter order ID in search box; 3. Click Search",Show matching order,None,Untested,10/12/2025,Manual test - search functionality
+TC_12,Lọc đơn theo status,"1. Go to Sales → Orders; 2. Select status filter (Pending/Processing/Completed); 3. Click Apply",Show only orders with selected status,None,Untested,10/12/2025,Manual test - filter functionality
+TC_13,Xuất invoice PDF,"1. Open order with invoice; 2. Go to Invoices tab; 3. Click Print Invoice",Download PDF file with correct invoice data,TC_05,Untested,10/12/2025,Manual test - PDF generation
+TC_14,Refund một phần đơn hàng,"1. Open completed order; 2. Click Refund; 3. Enter partial amount; 4. Save",Partial refund created,None,Untested,10/12/2025,Manual test - partial refund flow
+TC_15,Cập nhật tracking number,"1. Open order with shipment; 2. Click Edit Shipment; 3. Update tracking number; 4. Save",Tracking number updated,TC_07,Untested,10/12/2025,Manual test - edit shipment
+TC_16,Xem order comments/notes,"1. Open order detail; 2. Add comment/note; 3. Save; 4. Verify display",Comment displayed in order history,None,Untested,10/12/2025,Manual test - order notes
+TC_17,In packing slip,"1. Open order with shipment; 2. Click Print Packing Slip",Download packing slip PDF,TC_07,Untested,10/12/2025,Manual test - packing slip
+TC_18,Change order status manually,"1. Open order; 2. Change status dropdown; 3. Save",Order status updated,None,Untested,10/12/2025,Manual test - status management
+TC_19,Multi-invoice cho 1 order,"1. Create partial invoice; 2. Create another invoice for remaining items",Multiple invoices created for same order,TC_05,Untested,10/12/2025,Manual test - partial invoicing
+TC_20,View order từ customer email link,"1. Get order email; 2. Click view order link; 3. Login if required",Open order detail page,None,Untested,10/12/2025,Manual test - email integration
