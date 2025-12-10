@@ -128,6 +128,8 @@
                                 <div class="mt-2.5 grid gap-1 pb-2.5">
                                     {!! view_render_event('bagisto.shop.components.layouts.header.mobile.index.profile_dropdown.links.before') !!}
 
+                                    <!-- Profile, Orders, Wishlist hidden for cart-only branch -->
+                                    <!--
                                     <a
                                         class="cursor-pointer px-5 py-2 text-base"
                                         href="{{ route('shop.customers.account.profile.index') }}"
@@ -150,6 +152,7 @@
                                             @lang('shop::app.components.layouts.header.mobile.wishlist')
                                         </a>
                                     @endif
+                                    -->
 
                                     <!--Customers logout-->
                                     @auth('customer')

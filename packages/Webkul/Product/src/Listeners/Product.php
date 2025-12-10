@@ -38,7 +38,11 @@ class Product
 
         $productIds = $this->getAllRelatedProductIds($product);
 
-        UpdateCreateElasticSearchIndexJob::dispatch($productIds);
+        Bus::chain([
+            new UpdateCreateInventoryIndexJob($productIds),
+            new UpdateCreatePriceIndexJob($productIds),
+            new UpdateCreateElasticSearchIndexJob($productIds),
+        ])->dispatch();
     }
 
     /**
