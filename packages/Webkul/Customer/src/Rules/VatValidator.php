@@ -65,6 +65,11 @@ class VatValidator
             $number = $vatNumber;
         }
 
+        // If country is still not supported, skip validation (allow any format)
+        if (! isset(self::$pattern_expression[$country])) {
+            return true;
+        }
+
         return preg_match('/^'.self::$pattern_expression[$country].'$/', $number) > 0;
     }
 
