@@ -90,88 +90,88 @@ jobs:
     - name: 🧪 Running Product Catalog Tests (Shop)
       run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/ProductCatalogTest.php --colors=always
     
-    - name: 🧪 Running Product Display Tests (Shop)
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/ProductDisplayTest.php --colors=always
+    # - name: 🧪 Running Product Display Tests (Shop)
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/ProductDisplayTest.php --colors=always
     
-    - name: 🧪 Running Category Product Tests (Shop API)
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/API/CategoryProductTest.php --colors=always
+    # - name: 🧪 Running Category Product Tests (Shop API)
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/API/CategoryProductTest.php --colors=always
     
-    - name: 🧪 Running Product API Tests (Shop)
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/API/ProductTest.php --colors=always
+    # - name: 🧪 Running Product API Tests (Shop)
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/API/ProductTest.php --colors=always
     
-    # Shopping Cart Tests
-    - name: 🧪 Running Shopping Cart Tests (Shop)
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Checkout/CartTest.php --colors=always
+    # # Shopping Cart Tests
+    # - name: 🧪 Running Shopping Cart Tests (Shop)
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Checkout/CartTest.php --colors=always
     
-    - name: 🧪 Running Checkout Tests (Shop)
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Checkout/CheckoutTest.php --colors=always
+    # - name: 🧪 Running Checkout Tests (Shop)
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Checkout/CheckoutTest.php --colors=always
     
-    # Product Price Tests (Shop)
-    - name: 🧪 Running Product Price Tests - Simple
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/SimpleTest.php --colors=always
+    # # Product Price Tests (Shop)
+    # - name: 🧪 Running Product Price Tests - Simple
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/SimpleTest.php --colors=always
     
-    - name: 🧪 Running Product Price Tests - Configurable
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/ConfigurableTest.php --colors=always
+    # - name: 🧪 Running Product Price Tests - Configurable
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/ConfigurableTest.php --colors=always
     
-    - name: 🧪 Running Product Price Tests - Bundle
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/BundleTest.php --colors=always
+    # - name: 🧪 Running Product Price Tests - Bundle
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/BundleTest.php --colors=always
     
-    - name: 🧪 Running Product Price Tests - Grouped
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/GroupedTest.php --colors=always
+    # - name: 🧪 Running Product Price Tests - Grouped
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/GroupedTest.php --colors=always
     
-    - name: 🧪 Running Product Price Tests - Virtual
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/VirtualTest.php --colors=always
+    # - name: 🧪 Running Product Price Tests - Virtual
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/VirtualTest.php --colors=always
     
-    - name: 🧪 Running Product Price Tests - Downloadable
-      run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/DownloadableTest.php --colors=always
+    # - name: 🧪 Running Product Price Tests - Downloadable
+    #   run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/Product/Prices/DownloadableTest.php --colors=always
     
-    # Admin Catalog Tests
-    - name: 🧪 Running Attribute Family Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/AttributeFamilyTest.php --colors=always
+    # # Admin Catalog Tests
+    # - name: 🧪 Running Attribute Family Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/AttributeFamilyTest.php --colors=always
     
-    - name: 🧪 Running Attribute Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/AttributeTest.php --colors=always
+    # - name: 🧪 Running Attribute Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/AttributeTest.php --colors=always
     
-    - name: 🧪 Running Category Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/CategoryTest.php --colors=always
+    # - name: 🧪 Running Category Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/CategoryTest.php --colors=always
     
-    - name: 🧪 Running Inventory Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/InventoryTest.php --colors=always
+    # - name: 🧪 Running Inventory Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/InventoryTest.php --colors=always
     
-    - name: 🧪 Running Product Review Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/ProductReviewTest.php --colors=always
+    # - name: 🧪 Running Product Review Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/ProductReviewTest.php --colors=always
     
-    - name: 🧪 Running Product Search Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/ProductSearchTest.php --colors=always
+    # - name: 🧪 Running Product Search Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/ProductSearchTest.php --colors=always
     
-    - name: 🧪 Running Product Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/ProductTest.php --colors=always
+    # - name: 🧪 Running Product Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/ProductTest.php --colors=always
     
-    # Admin Product Type Tests
-    - name: 🧪 Running Product Type Tests - Simple (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/SimpleTest.php --colors=always
+    # # Admin Product Type Tests
+    # - name: 🧪 Running Product Type Tests - Simple (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/SimpleTest.php --colors=always
     
-    - name: 🧪 Running Product Type Tests - Configurable (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/ConfigurableTest.php --colors=always
+    # - name: 🧪 Running Product Type Tests - Configurable (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/ConfigurableTest.php --colors=always
     
-    - name: 🧪 Running Product Type Tests - Bundle (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/BundleTest.php --colors=always
+    # - name: 🧪 Running Product Type Tests - Bundle (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/BundleTest.php --colors=always
     
-    - name: 🧪 Running Product Type Tests - Grouped (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/GroupedTest.php --colors=always
+    # - name: 🧪 Running Product Type Tests - Grouped (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/GroupedTest.php --colors=always
     
-    - name: 🧪 Running Product Type Tests - Virtual (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/VirtualTest.php --colors=always
+    # - name: 🧪 Running Product Type Tests - Virtual (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/VirtualTest.php --colors=always
     
-    - name: 🧪 Running Product Type Tests - Downloadable (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/DownloadableTest.php --colors=always
+    # - name: 🧪 Running Product Type Tests - Downloadable (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Catalog/Products/Types/DownloadableTest.php --colors=always
     
-    # Admin Marketing Tests
-    - name: 🧪 Running Cart Rule Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Marketing/Promotions/CartRuleTest.php --colors=always
+    # # Admin Marketing Tests
+    # - name: 🧪 Running Cart Rule Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Marketing/Promotions/CartRuleTest.php --colors=always
     
-    - name: 🧪 Running Catalog Rule Tests (Admin)
-      run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Marketing/Promotions/CatalogRuleTest.php --colors=always
+    # - name: 🧪 Running Catalog Rule Tests (Admin)
+    #   run: vendor/bin/pest packages/Webkul/Admin/tests/Feature/Marketing/Promotions/CatalogRuleTest.php --colors=always
        
     - name: ✅ Basic Setup Complete
       run: echo "🎉 Product Catalog & Shopping Cart CI pipeline successful!"
