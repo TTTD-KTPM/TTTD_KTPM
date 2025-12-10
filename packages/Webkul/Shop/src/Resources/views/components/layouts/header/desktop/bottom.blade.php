@@ -102,7 +102,7 @@
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.before') !!}
 
-            <!-- Compare -->
+            {{-- Compare - HIDDEN for Payment & Inventory focus
             @if(core()->getConfigData('catalog.products.settings.compare_option'))
                 <a
                     href="{{ route('shop.compare.index') }}"
@@ -114,12 +114,13 @@
                     ></span>
                 </a>
             @endif
+            --}}
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.after') !!}
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.mini_cart.before') !!}
 
-            <!-- Mini cart -->
+            <!-- Mini cart - ESSENTIAL for Payment Process -->
             @if(core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                 @include('shop::checkout.cart.mini-cart')
             @endif
@@ -128,7 +129,7 @@
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile.before') !!}
 
-            <!-- user profile -->
+            {{-- User profile - HIDDEN, only guest login needed for checkout
             <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                 <x-slot:toggle>
                     <span
@@ -244,6 +245,7 @@
                     </x-slot>
                 @endauth
             </x-shop::dropdown>
+            --}}
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile.after') !!}
         </div>

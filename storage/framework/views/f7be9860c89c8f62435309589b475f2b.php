@@ -110,18 +110,7 @@
             <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.before'); ?>
 
 
-            <!-- Compare -->
-            <?php if(core()->getConfigData('catalog.products.settings.compare_option')): ?>
-                <a
-                    href="<?php echo e(route('shop.compare.index')); ?>"
-                    aria-label="<?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.compare'); ?>"
-                >
-                    <span
-                        class="icon-compare inline-block cursor-pointer text-2xl"
-                        role="presentation"
-                    ></span>
-                </a>
-            <?php endif; ?>
+            
 
             <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.after'); ?>
 
@@ -129,7 +118,7 @@
             <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.mini_cart.before'); ?>
 
 
-            <!-- Mini cart -->
+            <!-- Mini cart - ESSENTIAL for Payment Process -->
             <?php if(core()->getConfigData('sales.checkout.shopping_cart.cart_page')): ?>
                 <?php echo $__env->make('shop::checkout.cart.mini-cart', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             <?php endif; ?>
@@ -140,162 +129,7 @@
             <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile.before'); ?>
 
 
-            <!-- user profile -->
-            <?php if (isset($component)) { $__componentOriginal6eb652d0a4a36e6466d8d4f363feb553 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal6eb652d0a4a36e6466d8d4f363feb553 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'shop::components.dropdown.index','data' => ['position' => 'bottom-'.e(core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left').'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('shop::dropdown'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['position' => 'bottom-'.e(core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left').'']); ?>
-                 <?php $__env->slot('toggle', null, []); ?> 
-                    <span
-                        class="icon-users inline-block cursor-pointer text-2xl"
-                        role="button"
-                        aria-label="<?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.profile'); ?>"
-                        tabindex="0"
-                    ></span>
-                 <?php $__env->endSlot(); ?>
-
-                <!-- Guest Dropdown -->
-                <?php if(auth()->guard('customer')->guest()): ?>
-                     <?php $__env->slot('content', null, []); ?> 
-                        <div class="grid gap-2.5">
-                            <p class="font-dmserif text-xl">
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.welcome-guest'); ?>
-                            </p>
-
-                            <p class="text-sm">
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.dropdown-text'); ?>
-                            </p>
-                        </div>
-
-                        <p class="mt-3 w-full border border-zinc-200"></p>
-
-                        <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.customers_action.before'); ?>
-
-
-                        <div class="mt-6 flex gap-4">
-                            <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.sign_in_button.before'); ?>
-
-
-                            <a
-                                href="<?php echo e(route('shop.customer.session.create')); ?>"
-                                class="primary-button m-0 mx-auto block w-max rounded-2xl px-7 text-center text-base max-md:rounded-lg ltr:ml-0 rtl:mr-0"
-                            >
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.sign-in'); ?>
-                            </a>
-
-                            <a
-                                href="<?php echo e(route('shop.customers.register.index')); ?>"
-                                class="secondary-button m-0 mx-auto block w-max rounded-2xl border-2 px-7 text-center text-base max-md:rounded-lg max-md:py-3 ltr:ml-0 rtl:mr-0"
-                            >
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.sign-up'); ?>
-                            </a>
-
-                            <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.sign_up_button.after'); ?>
-
-                        </div>
-
-                        <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.customers_action.after'); ?>
-
-                     <?php $__env->endSlot(); ?>
-                <?php endif; ?>
-
-                <!-- Customers Dropdown -->
-                <?php if(auth()->guard('customer')->check()): ?>
-                     <?php $__env->slot('content', null, ['class' => '!p-0']); ?> 
-                        <div class="grid gap-2.5 p-5 pb-0">
-                            <p class="font-dmserif text-xl">
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.welcome'); ?>’
-                                <?php echo e(auth()->guard('customer')->user()->first_name); ?>
-
-                            </p>
-
-                            <p class="text-sm">
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.dropdown-text'); ?>
-                            </p>
-                        </div>
-
-                        <p class="mt-3 w-full border border-zinc-200"></p>
-
-                        <div class="mt-2.5 grid gap-1 pb-2.5">
-                            <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile_dropdown.links.before'); ?>
-
-
-                            <a
-                                class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                href="<?php echo e(route('shop.customers.account.profile.index')); ?>"
-                            >
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.profile'); ?>
-                            </a>
-
-                            <a
-                                class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                href="<?php echo e(route('shop.customers.account.orders.index')); ?>"
-                            >
-                                <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.orders'); ?>
-                            </a>
-
-                            <?php if(core()->getConfigData('customer.settings.wishlist.wishlist_option')): ?>
-                                <a
-                                    class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                    href="<?php echo e(route('shop.customers.account.wishlist.index')); ?>"
-                                >
-                                    <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.wishlist'); ?>
-                                </a>
-                            <?php endif; ?>
-
-                            <!--Customers logout-->
-                            <?php if(auth()->guard('customer')->check()): ?>
-                                <?php if (isset($component)) { $__componentOriginal4d3fcee3e355fb6c8889181b04f357cc = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal4d3fcee3e355fb6c8889181b04f357cc = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'shop::components.form.index','data' => ['method' => 'DELETE','action' => ''.e(route('shop.customer.session.destroy')).'','id' => 'customerLogout']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('shop::form'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['method' => 'DELETE','action' => ''.e(route('shop.customer.session.destroy')).'','id' => 'customerLogout']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal4d3fcee3e355fb6c8889181b04f357cc)): ?>
-<?php $attributes = $__attributesOriginal4d3fcee3e355fb6c8889181b04f357cc; ?>
-<?php unset($__attributesOriginal4d3fcee3e355fb6c8889181b04f357cc); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal4d3fcee3e355fb6c8889181b04f357cc)): ?>
-<?php $component = $__componentOriginal4d3fcee3e355fb6c8889181b04f357cc; ?>
-<?php unset($__componentOriginal4d3fcee3e355fb6c8889181b04f357cc); ?>
-<?php endif; ?>
-
-                                <a
-                                    class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                    href="<?php echo e(route('shop.customer.session.destroy')); ?>"
-                                    onclick="event.preventDefault(); document.getElementById('customerLogout').submit();"
-                                >
-                                    <?php echo app('translator')->get('shop::app.components.layouts.header.desktop.bottom.logout'); ?>
-                                </a>
-                            <?php endif; ?>
-
-                            <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile_dropdown.links.after'); ?>
-
-                        </div>
-                     <?php $__env->endSlot(); ?>
-                <?php endif; ?>
-             <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal6eb652d0a4a36e6466d8d4f363feb553)): ?>
-<?php $attributes = $__attributesOriginal6eb652d0a4a36e6466d8d4f363feb553; ?>
-<?php unset($__attributesOriginal6eb652d0a4a36e6466d8d4f363feb553); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal6eb652d0a4a36e6466d8d4f363feb553)): ?>
-<?php $component = $__componentOriginal6eb652d0a4a36e6466d8d4f363feb553; ?>
-<?php unset($__componentOriginal6eb652d0a4a36e6466d8d4f363feb553); ?>
-<?php endif; ?>
+            
 
             <?php echo view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile.after'); ?>
 
@@ -303,7 +137,7 @@
     </div>
 </div>
 
-<?php if (! $__env->hasRenderedOnce('d243aecf-440d-41b8-9cf4-8c9627804122')): $__env->markAsRenderedOnce('d243aecf-440d-41b8-9cf4-8c9627804122');
+<?php if (! $__env->hasRenderedOnce('27379a69-29ce-4831-b7eb-df9315f28c2e')): $__env->markAsRenderedOnce('27379a69-29ce-4831-b7eb-df9315f28c2e');
 $__env->startPush('scripts'); ?>
     <script
         type="text/x-template"
