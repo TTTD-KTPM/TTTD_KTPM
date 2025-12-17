@@ -70,8 +70,10 @@ jobs:
     - name: 🗄️ Running Bagisto Installer
       run: php artisan bagisto:install --skip-env-check --skip-admin-creation --skip-github-star
       
-  
-    - name: 🧪 Running Product Catalog Tests (Shop)
+    - name: 🧪 Running Customer Access Control Unit Tests
+      run: vendor/bin/pest packages/Webkul/Shop/tests/Unit/CustomerAccessControlUnitTest.php --colors=always
+
+    - name: 🧪 Running Customer Access Control Feature Tests
       run: vendor/bin/pest packages/Webkul/Shop/tests/Feature/CustomerAccessControlTest.php --colors=always
        
     - name: ✅ Basic Setup Complete
