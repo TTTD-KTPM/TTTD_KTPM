@@ -66,6 +66,7 @@
                 alt="uploaded image url"
                 width="20"
                 height="20"
+                crossorigin="anonymous"
             />
         </div>
     </script>
@@ -115,63 +116,25 @@
                     if (imageInput.files && imageInput.files[0]) {
                         if (imageInput.files[0].type.includes('image/')) {
                             if (imageInput.files[0].size <= 2000000) {
-                                let formData = new FormData();
+                                // MODIFIED: Use FileReader to convert image to data URL (avoids CORS issues)
+                                const reader = new FileReader();
+                                const self = this;
 
-                                formData.append('image', imageInput.files[0]);
+                                reader.onload = function(e) {
+                                    self.uploadedImageUrl = e.target.result;
 
-                                this.$axios.post('{{ route('shop.search.upload') }}', formData, {
-                                        headers: {
-                                            'Content-Type': 'multipart/form-data'
-                                        }
-                                    })
-                                    .then(response => {
-                                        let net;
-
-                                        let self = this;
-
-                                        this.uploadedImageUrl = response.data;
-
-                                        async function app() {
-                                            let analysedResult = [];
-
-                                            let queryString = '';
-
-                                            net = await mobilenet.load();
-
-                                            try {
-                                                const result = await net.classify(document.getElementById('uploaded-image-url'));
-
-                                                result.forEach(function(value) {
-                                                    queryString = value.className.split(',');
-
-                                                    if (queryString.length > 1) {
-                                                        analysedResult = analysedResult.concat(queryString);
-                                                    } else {
-                                                        analysedResult.push(queryString[0]);
-                                                    }
-                                                });
-                                            } catch (error) {
-                                                this.$emitter.emit('add-flash', { type: 'error', message: "@lang('shop::app.search.images.index.something-went-wrong')"});
-                                            }
-
-                                            localStorage.searchedImageUrl = self.uploadedImageUrl;
-
-                                            queryString = localStorage.searchedTerms = analysedResult.join('_');
-
-                                            queryString = localStorage.searchedTerms.split('_').map(term => {
-                                                return term.split(' ').join('+');
-                                            });
-
-                                            window.location.href = `${'{{ route('shop.search.index') }}'}?query=${queryString[0]}&image-search=1`;
-                                        }
-
-                                        app();
-                                    })
-                                    .catch((error) => {
-                                        this.$emitter.emit('add-flash', { type: 'error', message: "@lang('shop::app.search.images.index.something-went-wrong')"});
-
-                                        this.isSearching = false;
+                                    // MODIFIED: Wait for image to be set in DOM, then analyze
+                                    self.$nextTick(() => {
+                                        self.classifyImage();
                                     });
+                                };
+
+                                reader.onerror = function() {
+                                    self.$emitter.emit('add-flash', { type: 'error', message: '@lang('shop::app.search.images.index.something-went-wrong')'});
+                                    self.isSearching = false;
+                                };
+
+                                reader.readAsDataURL(imageInput.files[0]);
                             } else {
                                 imageInput.value = '';
 
@@ -186,6 +149,55 @@
 
                             this.isSearching = false;
                         }
+                    }
+                },
+
+                // MODIFIED: New method to classify image using TensorFlow/MobileNet
+                async classifyImage() {
+                    const self = this;
+
+                    try {
+                        const net = await mobilenet.load();
+                        const imgElement = document.getElementById('uploaded-image-url');
+
+                        // MODIFIED: Wait for image to load properly
+                        await new Promise((resolve, reject) => {
+                            if (imgElement.complete && imgElement.naturalHeight !== 0) {
+                                resolve();
+                            } else {
+                                imgElement.onload = resolve;
+                                imgElement.onerror = () => reject(new Error('Image failed to load'));
+                            }
+                        });
+
+                        const result = await net.classify(imgElement);
+
+                        let analysedResult = [];
+                        let queryString = '';
+
+                        result.forEach(function(value) {
+                            queryString = value.className.split(',');
+
+                            if (queryString.length > 1) {
+                                analysedResult = analysedResult.concat(queryString);
+                            } else {
+                                analysedResult.push(queryString[0]);
+                            }
+                        });
+
+                        localStorage.searchedImageUrl = self.uploadedImageUrl;
+                        queryString = localStorage.searchedTerms = analysedResult.join('_');
+
+                        queryString = localStorage.searchedTerms.split('_').map(term => {
+                            return term.split(' ').join('+');
+                        });
+
+                        window.location.href = `${'{{ route('shop.search.index') }}'}?query=${queryString[0]}&image-search=1`;
+                    } catch (error) {
+                        // MODIFIED: Better error logging
+                        console.error('Image classification error:', error);
+                        this.$emitter.emit('add-flash', { type: 'error', message: "@lang('shop::app.search.images.index.something-went-wrong')"});
+                        this.isSearching = false;
                     }
                 },
             },

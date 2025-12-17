@@ -15,5 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(BagistoDatabaseSeeder::class);
+        
+        // Fix theme images to use existing storage files
+        $this->call(CustomThemeSeeder::class);
     }
 }

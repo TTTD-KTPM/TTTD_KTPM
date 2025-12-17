@@ -329,12 +329,15 @@
                         <div class="grid gap-2.5 px-6 max-md:px-4 max-sm:gap-1.5">
                             {!! view_render_event('bagisto.shop.checkout.mini-cart.continue_to_checkout.before') !!}
 
+                        <!-- Proceed to Checkout button hidden for cart-only branch -->
+                        <!--
                         <a
                             href="{{ route('shop.checkout.onepage.index') }}"
                             class="mx-auto block w-full cursor-pointer rounded-2xl bg-navyBlue px-11 py-4 text-center text-base font-medium text-white max-md:rounded-lg max-md:px-5 max-md:py-2"
                         >
                             @lang('shop::app.checkout.cart.mini-cart.continue-to-checkout')
                         </a>
+                        -->
 
                             {!! view_render_event('bagisto.shop.checkout.mini-cart.continue_to_checkout.after') !!}
 
@@ -351,7 +354,8 @@
             </x-shop::drawer>
 
         @else
-            <a href="{{ route('shop.checkout.onepage.index') }}">
+            <!-- Mini-cart icon without checkout link for cart-only branch -->
+            <span>
                 {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.toggle.before') !!}
 
                     <span class="relative">
@@ -371,7 +375,7 @@
                     </span>
 
                 {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.toggle.after') !!}
-            </a>
+            </span>
         @endif
 
         {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.after') !!}

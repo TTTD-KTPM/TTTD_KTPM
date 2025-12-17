@@ -616,7 +616,7 @@ class Installer extends Command
     /**
      * Check key in `.env` file because it will help to find values at runtime.
      */
-    protected function getEnvVariable(string $key, $default = null): string|bool
+    protected function getEnvVariable(string $key, $default = null): string|bool|null
     {
         if ($data = file(base_path('.env'))) {
             foreach ($data as $line) {

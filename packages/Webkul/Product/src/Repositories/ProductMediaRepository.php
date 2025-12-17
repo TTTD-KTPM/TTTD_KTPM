@@ -61,9 +61,9 @@ class ProductMediaRepository extends Repository
 
                         $path = $this->getProductDirectory($product).'/'.Str::random(40).'.webp';
 
-                        Storage::put($path, $image);
+                        Storage::disk('public')->put($path, $image);
                     } else {
-                        $path = $file->store($this->getProductDirectory($product));
+                        $path = $file->store($this->getProductDirectory($product), 'public');
                     }
 
                     $this->create([
