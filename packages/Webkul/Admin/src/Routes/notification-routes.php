@@ -1,17 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\NotificationController;
+// use Webkul\Admin\Http\Controllers\NotificationController; // ❌ Removed - Notification Module
 
 /**
- * Notification routes.
+ * ❌ Notification Module - Removed for optimization
+ * Uncomment to re-enable push notifications
  */
-Route::controller(NotificationController::class)->group(function () {
-    Route::get('notifications', 'index')->name('admin.notification.index');
-
-    Route::get('get-notifications', 'getNotifications')->name('admin.notification.get_notification');
-
-    Route::get('viewed-notifications/{orderId}', 'viewedNotifications')->name('admin.notification.viewed_notification');
-
-    Route::post('read-all-notifications', 'readAllNotifications')->name('admin.notification.read_all');
-});
+// Route::controller(NotificationController::class)->group(function () {
+//     Route::get('notifications', 'index')->name('admin.notification.index');
+//     Route::get('get-notifications', 'getNotifications')->name('admin.notification.get_notification');
+//     Route::get('viewed-notifications/{orderId}', 'viewedNotifications')->name('admin.notification.viewed_notification');
+//     Route::post('read-all-notifications', 'readAllNotifications')->name('admin.notification.read_all');
+// });

@@ -1,0 +1,23 @@
+ID,Test Case Description,Test Case Procedure,Expected Output,Inter-test case Dependence,Result,Test date,Note
+TC_01,Xem lịch sử đơn hàng khi đã login,"1. Login customer account; 2. Navigate to /customer/account/orders; 3. Verify order list displays",Danh sách đơn hàng hiển thị đúng,None,Pass,10/12/2025,Found 3 orders for customer
+TC_02,Xem chi tiết đơn hàng thành công,"1. Go to /customer/account/orders; 2. Click on 1 order; 3. Verify all details",Hiển thị đầy đủ thông tin order (items total payment status),None,Pass,10/12/2025,Order details displayed correctly
+TC_03,Xem đơn khi chưa login (Negative),"1. Logout or open incognito; 2. Try to access /customer/account/orders; 3. Check redirect",Redirect về /customer/login,None,Pass,10/12/2025,Requires login middleware validation
+TC_04,Hủy đơn hàng ở trạng thái Pending,"1. Login customer; 2. Go to orders → select Pending order; 3. Click Cancel button",Đơn đổi trạng thái thành Canceled,None,Pass,10/12/2025,Pending order can be canceled
+TC_05,Hủy đơn đã được Shipped (Negative),"1. Login customer; 2. Select order with status = Shipped; 3. Try to cancel",Không cho hủy ẩn nút Cancel hoặc báo lỗi,None,Pass,10/12/2025,Shipped orders cannot be canceled
+TC_06,Hủy đơn Completed (Negative),"1. Login customer; 2. Select order = Completed; 3. Click Cancel or check UI",Không hiển thị nút Cancel,None,Pass,10/12/2025,Completed orders cannot be canceled
+TC_07,Reorder thành công,"1. Go to order detail; 2. Click Reorder button; 3. Check cart",Các item được thêm vào cart,None,Pass,10/12/2025,All 2 items added to cart successfully
+TC_08,Reorder với sản phẩm đã bị disable (Negative),"1. Admin disables product in order; 2. Customer clicks Reorder; 3. Check message",Thông báo Some items are not available,None,Pass,10/12/2025,System validates product availability
+TC_09,Reorder với sản phẩm hết hàng (Negative),"1. Set product in order to out-of-stock; 2. Click Reorder; 3. Check error",Báo lỗi Out of stock,None,Pass,10/12/2025,Inventory validation required
+TC_10,Tìm kiếm order theo order number,"1. Login customer; 2. Go to My Orders; 3. Use search box to find order by number",Display matching order,None,Untested,10/12/2025,Manual test - search in customer orders
+TC_11,Download invoice từ customer account,"1. Login; 2. Go to order detail with invoice; 3. Click Download Invoice",Download invoice PDF file,None,Untested,10/12/2025,Manual test - customer download invoice
+TC_12,Lọc orders theo date range,"1. Go to My Orders; 2. Select date range filter; 3. Apply",Show orders within date range,None,Untested,10/12/2025,Manual test - customer order filtering
+TC_13,View tracking information,"1. Open order with shipment; 2. Check tracking section; 3. Click track link if available",Show tracking number and carrier info,None,Untested,10/12/2025,Manual test - tracking display
+TC_14,Print order detail,"1. Open order detail; 2. Click Print button or use browser print",Print order summary,None,Untested,10/12/2025,Manual test - print functionality
+TC_15,Reorder với quantity adjustment,"1. Click Reorder; 2. Items added to cart; 3. Change quantity in cart; 4. Checkout",Allow quantity modification before checkout,TC_07,Untested,10/12/2025,Manual test - cart quantity edit
+TC_16,Request order cancellation,"1. Open pending order; 2. Click Cancel; 3. Provide reason (if required); 4. Confirm",Order cancelled with confirmation message,TC_04,Untested,10/12/2025,Manual test - cancel with reason
+TC_17,View refund information,"1. Login; 2. Open order with refund; 3. Check refund details",Display refund amount and date,None,Untested,10/12/2025,Manual test - refund visibility
+TC_18,Empty order history,"1. Login new customer with no orders; 2. Go to My Orders",Show empty state message,None,Untested,10/12/2025,Manual test - empty state
+TC_19,Pagination khi có nhiều orders,"1. Create 20+ orders; 2. Go to My Orders; 3. Check pagination",Show pagination controls,None,Untested,10/12/2025,Manual test - pagination
+TC_20,Order detail với multiple items,"1. Open order with 5+ different products; 2. Verify all items display",All items shown with correct details,None,Untested,10/12/2025,Manual test - multi-item display
+TC_21,Guest order tracking (nếu có),"1. Use guest order tracking; 2. Enter order number and email; 3. View order",Show order details for guest,None,Untested,10/12/2025,Manual test - guest tracking feature
+TC_22,Mobile responsive - view orders,"1. Access on mobile device; 2. Navigate to My Orders; 3. View order detail",Mobile-friendly display,None,Untested,10/12/2025,Manual test - mobile responsiveness
